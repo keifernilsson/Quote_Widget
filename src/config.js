@@ -1,8 +1,8 @@
 export const COMPANY = {
   name: "Terra Verde Lawn Company",
-  phone: "(555) 214-7788",
-  email: "hello@terraverde.example",
-  serviceArea: "local neighborhoods",
+  phone: "(403) 635-7460",
+  email: "terraverdelethbridge@gmail.com",
+  serviceArea: "West Lethbridge, Sunridge, Fairmont, Varsity Village, Ridgewood, Uplands, Paradise Canyon, The Crossings, West Highlands, Canyoncrest, Indian Battle Heights, Copperwood, Garry Station, Country Meadows, Heritage Heights, Riverstone",
 };
 
 export const SERVICE_OPTIONS = [
