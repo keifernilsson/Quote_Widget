@@ -2,7 +2,7 @@ export const COMPANY = {
   name: "Terra Verde Lawn Company",
   phone: "(403) 635-7460",
   email: "terraverdelethbridge@gmail.com",
-  serviceArea: "Lethbridge,",
+  serviceArea: "Lethbridge",
 };
 
 export const SERVICE_OPTIONS = [
