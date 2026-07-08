@@ -2,7 +2,7 @@ export const COMPANY = {
   name: "Terra Verde Lawn Company",
   phone: "(403) 635-7460",
   email: "terraverdelethbridge@gmail.com",
-  serviceArea: "West Lethbridge, Sunridge, Fairmont, Varsity Village, Ridgewood, Uplands, Paradise Canyon, The Crossings, West Highlands, Canyoncrest, Indian Battle Heights, Copperwood, Garry Station, Country Meadows, Heritage Heights, Riverstone",
+  serviceArea: "Lethbridge,",
 };
 
 export const SERVICE_OPTIONS = [
