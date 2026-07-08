@@ -26,6 +26,11 @@ export const SERVICE_OPTIONS = [
     label: "Seasonal lawn plan",
     description: "A recurring care plan tuned to your property.",
   },
+  {
+  value: "fertilization",
+  label: "Fertilization",
+  description: "A one-time lawn fertilizer application.",
+},
 ];
 
 export const QUOTE_RULES = {
@@ -34,6 +39,7 @@ export const QUOTE_RULES = {
     "spring-cleanup": { label: "Spring cleanup", low: 165, high: 260, unit: "project range" },
     "garden-care": { label: "Garden bed care", low: 135, high: 230, unit: "project range" },
     "seasonal-plan": { label: "Seasonal lawn plan", low: 185, high: 315, unit: "per month" },
+    "fertilization": { label: "Fertilization", low: 120, high: 200, unit: "per application" },
   },
   propertySizes: {
     small: { label: "Townhome or small yard", low: 0, high: 0 },
