@@ -26,14 +26,14 @@
 .tvqa {
   --tvqa-ink: #17231c;
   --tvqa-muted: #66716a;
-  --tvqa-green: #1f6f46;
-  --tvqa-green-dark: #174d34;
+  --tvqa-green: #800020;
+  --tvqa-green-dark: #5A0016;
   --tvqa-leaf: #5f9f64;
-  --tvqa-marigold: #efbf4d;
+  --tvqa-marigold: #8A7A2F;
   --tvqa-clay: #b96446;
   --tvqa-sky: #d9e8ee;
   --tvqa-line: #dce5dc;
-  --tvqa-soft: #f6f8f4;
+  --tvqa-soft: #F7F3EA;
   --tvqa-white: #ffffff;
   --tvqa-danger: #b7392f;
   --tvqa-shadow: 0 22px 70px rgba(23, 35, 28, 0.16);
