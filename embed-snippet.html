@@ -1,0 +1,11 @@
+<!-- Terra Verde Lawn Company quote assistant -->
+<div data-terra-verde-quote-assistant></div>
+<link rel="stylesheet" href="https://YOUR-ASSET-HOST/terra-verde-quote-assistant/styles.css" />
+<script type="module" src="https://YOUR-ASSET-HOST/terra-verde-quote-assistant/src/main.js"></script>
+
+<!-- Optional: connect the submission event to your form, CRM, or automation tool. -->
+<script>
+  document.addEventListener("terra-verde:quote-submitted", function (event) {
+    console.log("Terra Verde quote request", event.detail);
+  });
+</script>
