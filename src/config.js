@@ -8,13 +8,13 @@ export const COMPANY = {
 export const SERVICE_OPTIONS = [
   {
   value: "mowing",
-  label: "Weekly Lawn Mowing",
-  description: "Professional weekly mowing throughout the growing season.",
+  label: "Weekly Lawn Maintenance",
+  description: "Weekly mowing, edging and blowing throughout the growing season.",
 },
 {
   value: "one-time",
   label: "One-Time Services",
-  description: "Seasonal cleanups and individual maintenance services.",
+  description: "Property cleanups and lawn services.",
 },
 {
   value: "projects",
