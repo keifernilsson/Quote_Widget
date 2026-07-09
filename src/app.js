@@ -50,15 +50,15 @@ export class QuoteAssistant {
     const estimate = calculateEstimate(state.data, this.options.quoteRules);
     const PROGRESS_STEPS = {
   service: 1,
-  "mowing-property": 2,
-  "cleanup-property": 2,
-  "garden-property": 2,
-  "seasonal-property": 2,
-  "fertilization-property": 2,
+  "mowing-details": 2,
+  "one-time-details": 2,
+  "project-details": 2,
+  "other-details": 2,
   address: 3,
   estimate: 4,
   photos: 5,
   contact: 6,
+};
 };
     const progressTotal = 6;
 const progressIndex = (PROGRESS_STEPS[screen.id] ?? 1) - 1;
