@@ -48,13 +48,20 @@ export class QuoteAssistant {
     const previousFocus = this.captureFocus();
     const screenChanged = this.lastScreenId !== screen.id;
     const estimate = calculateEstimate(state.data, this.options.quoteRules);
-    const progressScreens = this.options.screens.filter((item) => item.showInProgress !== false);
-const progressTotal = progressScreens.length - 2;
-const progressIndex = clamp(
-  progressScreens.findIndex((item) => item.id === screen.id) - 1,
-  0,
-  progressTotal - 1
-);
+    const PROGRESS_STEPS = {
+  service: 1,
+  "mowing-property": 2,
+  "cleanup-property": 2,
+  "garden-property": 2,
+  "seasonal-property": 2,
+  "fertilization-property": 2,
+  address: 3,
+  estimate: 4,
+  photos: 5,
+  contact: 6,
+};
+    const progressTotal = 6;
+const progressIndex = (PROGRESS_STEPS[screen.id] ?? 1) - 1;
     const hideProgress = screen.id === "welcome" || screen.id === "success";
 
     clear(this.mount);
