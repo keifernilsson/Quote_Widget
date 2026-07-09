@@ -30,9 +30,11 @@ export function createStateMachine({ screens, initialData = {} }) {
 
   let nextId = null;
 
-  if (currentScreen.nextByService) {
-    nextId = currentScreen.nextByService[currentState.data.service];
-  }
+if (currentScreen.next) {
+  nextId = currentScreen.next;
+} else if (currentScreen.nextByService) {
+  nextId = currentScreen.nextByService[currentState.data.service];
+}
 
   const nextIndex =
     nextId && ids.includes(nextId)
