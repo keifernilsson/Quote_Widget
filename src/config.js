@@ -80,11 +80,10 @@ export const SCREENS = [
     description: "Pick the option that best matches the work you want done.",
     nextLabel: "Continue",
     nextByService: {
-  mowing: "mowing-property",
-  "spring-cleanup": "cleanup-property",
-  "garden-care": "garden-property",
-  "seasonal-plan": "seasonal-property",
-  fertilization: "fertilization-property",
+  mowing: "mowing-details",
+  "one-time": "one-time-details",
+  projects: "project-details",
+  other: "other-details",
 },
     fields: [
       {
