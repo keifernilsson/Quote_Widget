@@ -7,29 +7,24 @@ export const COMPANY = {
 
 export const SERVICE_OPTIONS = [
   {
-    value: "mowing",
-    label: "Mowing and edging",
-    description: "Routine mowing, trimming, blowing, and clean edging.",
-  },
-  {
-    value: "spring-cleanup",
-    label: "Spring cleanup",
-    description: "Beds, leaves, branches, first cut, and curb-ready cleanup.",
-  },
-  {
-    value: "garden-care",
-    label: "Garden bed care",
-    description: "Weeding, pruning, mulch refresh, and bed detailing.",
-  },
-  {
-    value: "seasonal-plan",
-    label: "Seasonal lawn plan",
-    description: "A recurring care plan tuned to your property.",
-  },
-  {
-  value: "fertilization",
-  label: "Fertilization",
-  description: "A one-time lawn fertilizer application.",
+  value: "mowing",
+  label: "Weekly Lawn Mowing",
+  description: "Professional weekly mowing throughout the growing season.",
+},
+{
+  value: "one-time",
+  label: "One-Time Services",
+  description: "Seasonal cleanups and individual maintenance services.",
+},
+{
+  value: "projects",
+  label: "Landscape Projects",
+  description: "Installations and property improvements.",
+},
+{
+  value: "other",
+  label: "Other",
+  description: "Tell us what you need help with.",
 },
 ];
 
@@ -102,7 +97,7 @@ export const SCREENS = [
     ],
   }, 
    {
-    id: "fertilization-property",
+    id: "mowing-details",
     type: "form",
     next: "address",
     title: "Tell us about the property",
@@ -123,19 +118,6 @@ export const SCREENS = [
         rules: [{ type: "required", message: "Choose a property size." }],
       },
       {
-        name: "frequency",
-        type: "choice",
-        variant: "segmented",
-        label: "Preferred schedule",
-        options: [
-          { value: "one-time", label: "One-time" },
-          { value: "weekly", label: "Weekly" },
-          { value: "biweekly", label: "2 weeks" },
-          { value: "monthly", label: "Monthly" },
-        ],
-        rules: [{ type: "required", message: "Choose a preferred schedule." }],
-      },
-      {
         name: "lawnCondition",
         type: "choice",
         variant: "compact",
@@ -147,21 +129,10 @@ export const SCREENS = [
         ],
         rules: [{ type: "required", message: "Choose the current condition." }],
       },
-      {
-        name: "addOns",
-        type: "checkboxGroup",
-        label: "Optional add-ons",
-        options: [
-          { value: "deepEdging", label: "Deep edging" },
-          { value: "weedControl", label: "Weed control" },
-          { value: "aeration", label: "Aeration" },
-          { value: "leafHaul", label: "Leaf haul-away" },
-        ],
-      },
     ],
   },
    {
-    id: "seasonal-property",
+    id: "one-time-details",
     type: "form",
      next: "address",
     title: "Tell us about the property",
@@ -182,19 +153,6 @@ export const SCREENS = [
         rules: [{ type: "required", message: "Choose a property size." }],
       },
       {
-        name: "frequency",
-        type: "choice",
-        variant: "segmented",
-        label: "Preferred schedule",
-        options: [
-          { value: "one-time", label: "One-time" },
-          { value: "weekly", label: "Weekly" },
-          { value: "biweekly", label: "2 weeks" },
-          { value: "monthly", label: "Monthly" },
-        ],
-        rules: [{ type: "required", message: "Choose a preferred schedule." }],
-      },
-      {
         name: "lawnCondition",
         type: "choice",
         variant: "compact",
@@ -206,21 +164,10 @@ export const SCREENS = [
         ],
         rules: [{ type: "required", message: "Choose the current condition." }],
       },
-      {
-        name: "addOns",
-        type: "checkboxGroup",
-        label: "Optional add-ons",
-        options: [
-          { value: "deepEdging", label: "Deep edging" },
-          { value: "weedControl", label: "Weed control" },
-          { value: "aeration", label: "Aeration" },
-          { value: "leafHaul", label: "Leaf haul-away" },
-        ],
-      },
     ],
   },
   {
-    id: "garden-property",
+    id: "project-details",
     type: "form",
     next: "address",
     title: "Tell us about the property",
@@ -229,43 +176,6 @@ export const SCREENS = [
     nextLabel: "Continue",
     fields: [
       {
-        name: "propertySize",
-        type: "choice",
-        variant: "compact",
-        label: "Property size",
-        options: [
-          { value: "standard", label: "Standard", description: "Typical suburban property", info: "Lots up to 7,000 sq ft." },
-          { value: "large", label: "Large", description: "Large lot or corner property",  info: "Lots from 7,001 - 10,890 sq ft (1/4 acre)" },
-          { value: "custom", label: "Custom", description: "Extra large or unique property", info: "Lots over 10,890 sq ft (1/4 acre) require a custom quote" },
-        ],
-        rules: [{ type: "required", message: "Choose a property size." }],
-      },
-      {
-        name: "frequency",
-        type: "choice",
-        variant: "segmented",
-        label: "Preferred schedule",
-        options: [
-          { value: "one-time", label: "One-time" },
-          { value: "weekly", label: "Weekly" },
-          { value: "biweekly", label: "2 weeks" },
-          { value: "monthly", label: "Monthly" },
-        ],
-        rules: [{ type: "required", message: "Choose a preferred schedule." }],
-      },
-      {
-        name: "lawnCondition",
-        type: "choice",
-        variant: "compact",
-        label: "Current condition",
-        options: [
-          { value: "maintained", label: "Maintained", description: "Needs routine care" },
-          { value: "overgrown", label: "Overgrown", description: "Needs extra attention" },
-          { value: "rescue", label: "Reset", description: "Needs a full cleanup" },
-        ],
-        rules: [{ type: "required", message: "Choose the current condition." }],
-      },
-      {
         name: "addOns",
         type: "checkboxGroup",
         label: "Optional add-ons",
@@ -279,7 +189,7 @@ export const SCREENS = [
     ],
   },
    {
-    id: "cleanup-property",
+    id: "other-details",
     type: "form",
      next: "address",
     title: "Tell us about the property",
@@ -287,161 +197,6 @@ export const SCREENS = [
     description: "These details help us estimate the scope before an on-site visit.",
     nextLabel: "Continue",
     fields: [
-      {
-        name: "propertySize",
-        type: "choice",
-        variant: "compact",
-        label: "Property size",
-        options: [
-          { value: "standard", label: "Standard", description: "Typical suburban property", info: "Lots up to 7,000 sq ft." },
-          { value: "large", label: "Large", description: "Large lot or corner property",  info: "Lots from 7,001 - 10,890 sq ft (1/4 acre)" },
-          { value: "custom", label: "Custom", description: "Extra large or unique property", info: "Lots over 10,890 sq ft (1/4 acre) require a custom quote" },
-        ],
-        rules: [{ type: "required", message: "Choose a property size." }],
-      },
-      {
-        name: "frequency",
-        type: "choice",
-        variant: "segmented",
-        label: "Preferred schedule",
-        options: [
-          { value: "one-time", label: "One-time" },
-          { value: "weekly", label: "Weekly" },
-          { value: "biweekly", label: "2 weeks" },
-          { value: "monthly", label: "Monthly" },
-        ],
-        rules: [{ type: "required", message: "Choose a preferred schedule." }],
-      },
-      {
-        name: "lawnCondition",
-        type: "choice",
-        variant: "compact",
-        label: "Current condition",
-        options: [
-          { value: "maintained", label: "Maintained", description: "Needs routine care" },
-          { value: "overgrown", label: "Overgrown", description: "Needs extra attention" },
-          { value: "rescue", label: "Reset", description: "Needs a full cleanup" },
-        ],
-        rules: [{ type: "required", message: "Choose the current condition." }],
-      },
-      {
-        name: "addOns",
-        type: "checkboxGroup",
-        label: "Optional add-ons",
-        options: [
-          { value: "deepEdging", label: "Deep edging" },
-          { value: "weedControl", label: "Weed control" },
-          { value: "aeration", label: "Aeration" },
-          { value: "leafHaul", label: "Leaf haul-away" },
-        ],
-      },
-    ],
-  },
-   {
-    id: "mowing-property",
-    type: "form",
-     next: "address",
-    title: "Tell us about the property",
-    eyebrow: "Step 2 of 6",
-    description: "These details help us estimate the scope before an on-site visit.",
-    nextLabel: "Continue",
-    fields: [
-      {
-        name: "propertySize",
-        type: "choice",
-        variant: "compact",
-        label: "Property size",
-        options: [
-          { value: "standard", label: "Standard", description: "Typical suburban property", info: "Lots up to 7,000 sq ft." },
-          { value: "large", label: "Large", description: "Large lot or corner property",  info: "Lots from 7,001 - 10,890 sq ft (1/4 acre)" },
-          { value: "custom", label: "Custom", description: "Extra large or unique property", info: "Lots over 10,890 sq ft (1/4 acre) require a custom quote" },
-        ],
-        rules: [{ type: "required", message: "Choose a property size." }],
-      },
-      {
-        name: "frequency",
-        type: "choice",
-        variant: "segmented",
-        label: "Preferred schedule",
-        options: [
-          { value: "one-time", label: "One-time" },
-          { value: "weekly", label: "Weekly" },
-          { value: "biweekly", label: "2 weeks" },
-          { value: "monthly", label: "Monthly" },
-        ],
-        rules: [{ type: "required", message: "Choose a preferred schedule." }],
-      },
-      {
-        name: "lawnCondition",
-        type: "choice",
-        variant: "compact",
-        label: "Current condition",
-        options: [
-          { value: "maintained", label: "Maintained", description: "Needs routine care" },
-          { value: "overgrown", label: "Overgrown", description: "Needs extra attention" },
-          { value: "rescue", label: "Reset", description: "Needs a full cleanup" },
-        ],
-        rules: [{ type: "required", message: "Choose the current condition." }],
-      },
-      {
-        name: "addOns",
-        type: "checkboxGroup",
-        label: "Optional add-ons",
-        options: [
-          { value: "deepEdging", label: "Deep edging" },
-          { value: "weedControl", label: "Weed control" },
-          { value: "aeration", label: "Aeration" },
-          { value: "leafHaul", label: "Leaf haul-away" },
-        ],
-      },
-    ],
-  },
-  {
-    id: "property",
-    type: "form",
-    title: "Tell us about the property",
-    eyebrow: "Step 2 of 6",
-    description: "These details help us estimate the scope before an on-site visit.",
-    nextLabel: "Continue",
-    fields: [
-      {
-        name: "propertySize",
-        type: "choice",
-        variant: "compact",
-        label: "Property size",
-        options: [
-          { value: "small", label: "Small", description: "Townhome or compact yard" },
-          { value: "medium", label: "Medium", description: "Typical suburban property" },
-          { value: "large", label: "Large", description: "Large lot or corner property" },
-          { value: "estate", label: "Estate", description: "Oversized or complex property" },
-        ],
-        rules: [{ type: "required", message: "Choose a property size." }],
-      },
-      {
-        name: "frequency",
-        type: "choice",
-        variant: "segmented",
-        label: "Preferred schedule",
-        options: [
-          { value: "one-time", label: "One-time" },
-          { value: "weekly", label: "Weekly" },
-          { value: "biweekly", label: "2 weeks" },
-          { value: "monthly", label: "Monthly" },
-        ],
-        rules: [{ type: "required", message: "Choose a preferred schedule." }],
-      },
-      {
-        name: "lawnCondition",
-        type: "choice",
-        variant: "compact",
-        label: "Current condition",
-        options: [
-          { value: "maintained", label: "Maintained", description: "Needs routine care" },
-          { value: "overgrown", label: "Overgrown", description: "Needs extra attention" },
-          { value: "rescue", label: "Reset", description: "Needs a full cleanup" },
-        ],
-        rules: [{ type: "required", message: "Choose the current condition." }],
-      },
       {
         name: "addOns",
         type: "checkboxGroup",
