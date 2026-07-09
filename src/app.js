@@ -59,7 +59,6 @@ export class QuoteAssistant {
   photos: 5,
   contact: 6,
 };
-};
     const progressTotal = 6;
 const progressIndex = (PROGRESS_STEPS[screen.id] ?? 1) - 1;
     const hideProgress = screen.id === "welcome" || screen.id === "success";
