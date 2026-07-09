@@ -70,7 +70,6 @@ export function WelcomePanel({ screen, imageUrl, company }) {
         "dl",
         { class: "tvqa-proof" },
         proofItem("Typical time", "2 minutes"),
-        proofItem("Estimate type", "Starting range"),
         proofItem("Service area", company.serviceArea)
       )
     )
