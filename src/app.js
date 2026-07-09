@@ -48,8 +48,13 @@ export class QuoteAssistant {
     const previousFocus = this.captureFocus();
     const screenChanged = this.lastScreenId !== screen.id;
     const estimate = calculateEstimate(state.data, this.options.quoteRules);
-    const progressTotal = this.options.screens.length - 2;
-    const progressIndex = clamp(state.index - 1, 0, progressTotal - 1);
+    const progressScreens = this.options.screens.filter((item) => item.showInProgress !== false);
+const progressTotal = progressScreens.length - 2;
+const progressIndex = clamp(
+  progressScreens.findIndex((item) => item.id === screen.id) - 1,
+  0,
+  progressTotal - 1
+);
     const hideProgress = screen.id === "welcome" || screen.id === "success";
 
     clear(this.mount);
