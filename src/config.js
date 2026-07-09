@@ -104,7 +104,7 @@ export const SCREENS = [
    {
     id: "fertilization-property",
     type: "form",
-     showInProgress: False,
+     showInProgress: false,
     title: "Tell us about the property",
     eyebrow: "Step 2 of 6",
     description: "These details help us estimate the scope before an on-site visit.",
@@ -164,7 +164,7 @@ export const SCREENS = [
    {
     id: "seasonal-property",
     type: "form",
-     showInProgress: False,
+     showInProgress: false,
     title: "Tell us about the property",
     eyebrow: "Step 2 of 6",
     description: "These details help us estimate the scope before an on-site visit.",
@@ -224,7 +224,7 @@ export const SCREENS = [
   {
     id: "garden-property",
     type: "form",
-    showInProgress: False,
+    showInProgress: false,
     title: "Tell us about the property",
     eyebrow: "Step 2 of 6",
     description: "These details help us estimate the scope before an on-site visit.",
@@ -284,7 +284,7 @@ export const SCREENS = [
    {
     id: "cleanup-property",
     type: "form",
-     showInProgress: False,
+     showInProgress: false,
     title: "Tell us about the property",
     eyebrow: "Step 2 of 6",
     description: "These details help us estimate the scope before an on-site visit.",
@@ -344,7 +344,7 @@ export const SCREENS = [
    {
     id: "mowing-property",
     type: "form",
-     showInProgress: False,
+     showInProgress: false,
     title: "Tell us about your lawn",
     eyebrow: "Step 2 of 6",
     description: "These details help us estimate the scope before an on-site visit.",
