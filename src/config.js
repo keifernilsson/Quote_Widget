@@ -340,7 +340,7 @@ export const SCREENS = [
    {
     id: "mowing-property",
     type: "form",
-    title: "Tell us about the property",
+    title: "Tell us about your lawn",
     eyebrow: "Step 2 of 6",
     description: "These details help us estimate the scope before an on-site visit.",
     nextLabel: "Continue",
