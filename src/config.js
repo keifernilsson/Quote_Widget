@@ -100,7 +100,7 @@ export const SCREENS = [
     title: "Tell us about the property",
     eyebrow: "Step 2 of 6",
     description: "These details help us estimate the scope before an on-site visit.",
-    nextLabel: "See address step",
+    nextLabel: "Continue",
     fields: [
       {
         name: "propertySize",
