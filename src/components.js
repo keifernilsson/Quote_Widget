@@ -1,4 +1,5 @@
 import { h, visuallyHidden } from "./dom.js";
+import { formatCurrency } from "./quote-engine.js";
 
 export function Shell({ company, progress, children }) {
   return h(
@@ -274,23 +275,60 @@ export function FileInput({ field, value = [], error, onChange }) {
 }
 
 export function EstimatePanel({ estimate }) {
+  if (estimate.customQuoteRequired) {
+    return h(
+      "section",
+      { class: "tvqa-estimate", "aria-live": "polite" },
+      h("p", { class: "tvqa-estimate-label" }, "Estimate"),
+      h("p", { class: "tvqa-estimate-value" }, "Custom quote required"),
+      h("p", { class: "tvqa-disclaimer" }, estimate.disclaimer)
+    );
+  }
+
+  const firstVisitItems = [
+    ...estimate.weeklyLineItems,
+    ...estimate.restorationLineItems,
+  ];
+
   return h(
     "section",
     { class: "tvqa-estimate", "aria-live": "polite" },
-    h("p", { class: "tvqa-estimate-label" }, "Estimated starting range"),
-    h("p", { class: "tvqa-estimate-value" }, estimate.summary),
+
+    h("p", { class: "tvqa-estimate-label" }, "First Service Total"),
+    h(
+      "p",
+      { class: "tvqa-estimate-value" },
+      formatCurrency(estimate.firstServiceTotal)
+    ),
+
+    h("p", { class: "tvqa-estimate-label" }, "Your first visit includes:"),
+
     h(
       "div",
       { class: "tvqa-line-items" },
-      estimate.lineItems.map((item) =>
+      firstVisitItems.map((item) =>
         h(
           "div",
           { class: "tvqa-line-item" },
           h("span", {}, item.label),
-          h("strong", {}, item.amount)
+          h(
+            "strong",
+            {},
+            item.label === "Initial Lawn Restoration"
+              ? `${formatCurrency(item.amount)} one-time`
+              : formatCurrency(item.amount)
+          )
         )
       )
     ),
+
+    h("p", { class: "tvqa-estimate-label" }, "Ongoing Weekly Service"),
+    h(
+      "p",
+      { class: "tvqa-estimate-value" },
+      `${formatCurrency(estimate.weeklyTotal)}/week`
+    ),
+
     h("p", { class: "tvqa-disclaimer" }, estimate.disclaimer)
   );
 }
