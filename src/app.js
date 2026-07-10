@@ -103,15 +103,6 @@ const progressIndex = (PROGRESS_STEPS[screen.id] ?? 1) - 1;
         imageUrl: `${this.options.assetBaseUrl}assets/terra-verde-lawn.webp`,
       });
     }
-
-    if (screen.type === "estimate") {
-      return h(
-        "div",
-        { class: "tvqa-screen" },
-        ScreenIntro({ screen }),
-        EstimatePanel({ estimate })
-      );
-      }
       if (screen.type === "summary") {
   const previewSubmission = createSubmissionPayload(
     state.data,
