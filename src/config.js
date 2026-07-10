@@ -169,17 +169,42 @@ export const SCREENS = [
         rules: [{ type: "required", message: "Choose a property size." }],
       },
       {
-        name: "lawnCondition",
-        type: "choice",
-        variant: "compact",
-        label: "Current condition",
-        options: [
-          { value: "maintained", label: "Maintained", description: "Needs routine care" },
-          { value: "overgrown", label: "Overgrown", description: "Needs extra attention" },
-          { value: "rescue", label: "Reset", description: "Needs a full cleanup" },
-        ],
-        rules: [{ type: "required", message: "Choose the current condition." }],
-      },
+  name: "oneTimeServices",
+  type: "checkboxGroup",
+  label: "Which services are you interested in? Select all that apply.",
+  options: [
+    {
+      value: "propertyCleanup",
+      label: "Property Cleanup",
+      description:
+        "Remove debris, cut back overgrowth, and restore a tidy appearance.",
+    },
+    {
+      value: "gardenBedWeeding",
+      label: "Garden Bed Weeding",
+      description:
+        "Remove weeds from existing garden and landscape beds by hand.",
+    },
+    {
+      value: "mulchInstallation",
+      label: "Mulch Installation",
+      description:
+        "Install fresh mulch in existing garden and landscape beds.",
+    },
+    {
+      value: "fertilization",
+      label: "Fertilization",
+      description:
+        "Apply lawn fertilizer to encourage greener, thicker turf.",
+    },
+  ],
+  rules: [
+    {
+      type: "required",
+      message: "Choose at least one service.",
+    },
+  ],
+},
     ],
   },
   {
