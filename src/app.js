@@ -8,7 +8,7 @@ import {
   ErrorSummary,
   EstimatePanel,
   FieldRenderer,
-  ReviewPanel
+  ReviewPanel,
   ScreenIntro,
   Shell,
   SummaryPanel,
@@ -104,7 +104,7 @@ const progressIndex = (PROGRESS_STEPS[screen.id] ?? 1) - 1;
         imageUrl: `${this.options.assetBaseUrl}assets/terra-verde-lawn.webp`,
       });
     }
-      if (screen.type === "summary") {
+if (screen.type === "summary") {
   const previewSubmission = createSubmissionPayload(
     state.data,
     estimate,
@@ -116,12 +116,11 @@ const progressIndex = (PROGRESS_STEPS[screen.id] ?? 1) - 1;
     { class: "tvqa-screen" },
     ScreenIntro({ screen }),
     EstimatePanel({ estimate }),
-    SummaryPanel({
+    ReviewPanel({
       submission: previewSubmission,
-      estimate,
     })
   );
-    }
+}
 
     if (screen.type === "success") {
       return h(
