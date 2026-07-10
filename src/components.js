@@ -489,6 +489,17 @@ function formatReviewValue(value) {
     return "Not provided";
   }
 
+  const labels = {
+    propertyCleanup: "Property Cleanup",
+    gardenBedWeeding: "Garden Bed Weeding",
+    mulchInstallation: "Mulch Installation",
+    fertilization: "Fertilization",
+  };
+
+  if (labels[value]) {
+    return labels[value];
+  }
+
   return String(value)
     .replaceAll("-", " ")
     .replace(/\b\w/g, (letter) => letter.toUpperCase());
