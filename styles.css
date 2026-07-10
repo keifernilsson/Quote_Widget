@@ -425,6 +425,10 @@
   font-weight: 700;
   line-height: 1.35;
 }
+.tvqa-check-label + .tvqa-choice-description {
+  display: block;
+  margin-top: 4px;
+}
 
 .tvqa-upload {
   min-height: 116px;

@@ -1,4 +1,4 @@
-import { SCREENS, COMPANY, QUOTE_RULES } from "./config.js";
+import { SCREENS, COMPANY, SERVICE_OPTIONS } from "./config.js";
 import { createStateMachine } from "./state-machine.js";
 import { validateScreen } from "./validation.js";
 import { calculateEstimate } from "./quote-engine.js";
@@ -8,6 +8,7 @@ import {
   ErrorSummary,
   EstimatePanel,
   FieldRenderer,
+  ReviewPanel,
   ScreenIntro,
   Shell,
   SummaryPanel,
@@ -17,7 +18,6 @@ import {
 const DEFAULTS = {
   screens: SCREENS,
   company: COMPANY,
-  quoteRules: QUOTE_RULES,
   assetBaseUrl: new URL("../", import.meta.url).toString(),
 };
 
@@ -48,8 +48,19 @@ export class QuoteAssistant {
     const previousFocus = this.captureFocus();
     const screenChanged = this.lastScreenId !== screen.id;
     const estimate = calculateEstimate(state.data, this.options.quoteRules);
-    const progressTotal = this.options.screens.length - 2;
-    const progressIndex = clamp(state.index - 1, 0, progressTotal - 1);
+    const PROGRESS_STEPS = {
+  service: 1,
+  "mowing-details": 2,
+  "one-time-details": 2,
+  "project-details": 2,
+  "other-details": 2,
+  address: 3,
+  photos: 4,
+  contact: 5,
+  summary: 6,
+};
+    const progressTotal = 6;
+const progressIndex = (PROGRESS_STEPS[screen.id] ?? 1) - 1;
     const hideProgress = screen.id === "welcome" || screen.id === "success";
 
     clear(this.mount);
@@ -92,15 +103,23 @@ export class QuoteAssistant {
         imageUrl: `${this.options.assetBaseUrl}assets/terra-verde-lawn.webp`,
       });
     }
+if (screen.type === "summary") {
+  const previewSubmission = createSubmissionPayload(
+    state.data,
+    estimate,
+    this.options
+  );
 
-    if (screen.type === "estimate") {
-      return h(
-        "div",
-        { class: "tvqa-screen" },
-        ScreenIntro({ screen }),
-        EstimatePanel({ estimate })
-      );
-    }
+  return h(
+    "div",
+    { class: "tvqa-screen" },
+    ScreenIntro({ screen }),
+    EstimatePanel({ estimate }),
+    ReviewPanel({
+      submission: previewSubmission,
+    })
+  );
+}
 
     if (screen.type === "success") {
       return h(
@@ -164,7 +183,7 @@ export class QuoteAssistant {
       }
     }
 
-    if (screen.id === "contact") {
+    if (screen.id === "summary") {
       const payload = createSubmissionPayload(state.data, estimate, this.options);
       this.options.onSubmit?.(payload);
       this.mount.dispatchEvent(
@@ -238,7 +257,9 @@ export class QuoteAssistant {
 
 function createSubmissionPayload(data, estimate, options) {
   const reference = `TV-${Date.now().toString(36).toUpperCase()}`;
-  const service = options.quoteRules.services[data.service]?.label || data.service;
+  const service =
+  SERVICE_OPTIONS.find((option) => option.value === data.service)?.label ||
+  data.service;
 
   return {
     reference,

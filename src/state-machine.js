@@ -26,14 +26,28 @@ export function createStateMachine({ screens, initialData = {} }) {
         });
 
       case "NEXT": {
-        const nextIndex = Math.min(currentState.index + 1, ids.length - 1);
-        return freezeState({
-          ...currentState,
-          current: ids[nextIndex],
-          index: nextIndex,
-          history: [...currentState.history, currentState.current],
-        });
-      }
+  const currentScreen = screens[currentState.index];
+
+  let nextId = null;
+
+if (currentScreen.next) {
+  nextId = currentScreen.next;
+} else if (currentScreen.nextByService) {
+  nextId = currentScreen.nextByService[currentState.data.service];
+}
+
+  const nextIndex =
+    nextId && ids.includes(nextId)
+      ? ids.indexOf(nextId)
+      : Math.min(currentState.index + 1, ids.length - 1);
+
+  return freezeState({
+    ...currentState,
+    current: ids[nextIndex],
+    index: nextIndex,
+    history: [...currentState.history, currentState.current],
+  });
+}
 
       case "BACK": {
         const previousIndex = Math.max(currentState.index - 1, 0);

@@ -7,65 +7,26 @@ export const COMPANY = {
 
 export const SERVICE_OPTIONS = [
   {
-    value: "mowing",
-    label: "Mowing and edging",
-    description: "Routine mowing, trimming, blowing, and clean edging.",
-  },
-  {
-    value: "spring-cleanup",
-    label: "Spring cleanup",
-    description: "Beds, leaves, branches, first cut, and curb-ready cleanup.",
-  },
-  {
-    value: "garden-care",
-    label: "Garden bed care",
-    description: "Weeding, pruning, mulch refresh, and bed detailing.",
-  },
-  {
-    value: "seasonal-plan",
-    label: "Seasonal lawn plan",
-    description: "A recurring care plan tuned to your property.",
-  },
-  {
-  value: "fertilization",
-  label: "Fertilization",
-  description: "A one-time lawn fertilizer application.",
+  value: "mowing",
+  label: "Lawn Maintenance",
+  description: "Weekly mowing, edging and blowing throughout the growing season.",
+},
+{
+  value: "one-time",
+  label: "One-Time Services",
+  description: "Property cleanups and lawn services.",
+},
+{
+  value: "projects",
+  label: "Landscape Projects",
+  description: "Installations and property improvements.",
+},
+{
+  value: "other",
+  label: "Other",
+  description: "Tell us what you need help with.",
 },
 ];
-
-export const QUOTE_RULES = {
-  services: {
-    mowing: { label: "Mowing and edging", low: 44, high: 68, unit: "per visit" },
-    "spring-cleanup": { label: "Spring cleanup", low: 165, high: 260, unit: "project range" },
-    "garden-care": { label: "Garden bed care", low: 135, high: 230, unit: "project range" },
-    "seasonal-plan": { label: "Seasonal lawn plan", low: 185, high: 315, unit: "per month" },
-    "fertilization": { label: "Fertilization", low: 120, high: 200, unit: "per application" },
-  },
-  propertySizes: {
-    small: { label: "Townhome or small yard", low: 0, high: 0 },
-    medium: { label: "Standard suburban yard", low: 18, high: 34 },
-    large: { label: "Large yard", low: 42, high: 78 },
-    estate: { label: "Estate or oversized lot", low: 85, high: 150 },
-  },
-  conditions: {
-    maintained: { label: "Already maintained", low: 0, high: 0 },
-    overgrown: { label: "A little overgrown", low: 18, high: 44 },
-    rescue: { label: "Needs a reset", low: 55, high: 115 },
-  },
-  frequencies: {
-    "one-time": { label: "One-time", multiplier: 1 },
-    weekly: { label: "Weekly", multiplier: 0.9 },
-    biweekly: { label: "Every 2 weeks", multiplier: 0.96 },
-    monthly: { label: "Monthly", multiplier: 1.06 },
-  },
-  addOns: {
-    deepEdging: { label: "Deep edging", low: 12, high: 28 },
-    weedControl: { label: "Weed control", low: 24, high: 48 },
-    aeration: { label: "Aeration", low: 65, high: 120 },
-    leafHaul: { label: "Leaf or debris haul-away", low: 45, high: 110 },
-  },
-  rangeBuffer: 0.08,
-};
 
 export const SCREENS = [
   {
@@ -84,6 +45,12 @@ export const SCREENS = [
     eyebrow: "Step 1 of 6",
     description: "Pick the option that best matches the work you want done.",
     nextLabel: "Continue",
+    nextByService: {
+  mowing: "mowing-details",
+  "one-time": "one-time-details",
+  projects: "project-details",
+  other: "other-details",
+},
     fields: [
       {
         name: "service",
@@ -93,10 +60,63 @@ export const SCREENS = [
         rules: [{ type: "required", message: "Choose a service to continue." }],
       },
     ],
-  },
-  {
-    id: "property",
+  }, 
+   {
+    id: "mowing-details",
     type: "form",
+    next: "address",
+    title: "Tell us about the property",
+    eyebrow: "Step 2 of 6",
+    description: "Tell us about the property so we can estimate your weekly mowing price.",
+    nextLabel: "Continue",
+    fields: [
+      {
+        name: "propertySize",
+        type: "choice",
+        variant: "compact",
+        label: "Property size",
+        options: [
+          { value: "standard", label: "Standard", description: "Typical suburban property", info: "Lots up to 7,000 sq ft." },
+          { value: "large", label: "Large", description: "Large lot or corner property",  info: "Lots from 7,001 - 10,890 sq ft (1/4 acre)" },
+          { value: "custom", label: "Custom", description: "Extra large or unique property", info: "Lots over 10,890 sq ft (1/4 acre) require a custom quote" },
+        ],
+        rules: [{ type: "required", message: "Choose a property size." }],
+      },
+      {
+        name: "lawnCondition",
+        type: "choice",
+        variant: "compact",
+        label: "Current condition",
+        options: [
+          { value: "maintained", label: "Maintained", description: "Currently being mowed on a routine schedule" },
+          { value: "overgrown", label: "Overgrown", description: "Longer than normal, but still mowable" },
+          { value: "initial-cleanup", label: "Reset", description: "Significant growth/requires a full cleanup" },
+        ],
+        rules: [{ type: "required", message: "Choose the current condition." }],
+      },
+      {
+  name: "addOns",
+  type: "checkboxGroup",
+  label: "Optional add-ons",
+  options: [
+    {
+      value: "bedWeeding",
+      label: "Weekly garden bed weeding",
+      description: "Keep your flower beds neat with routine weed removal.",
+    },
+    {
+      value: "dogWasteRemoval",
+      label: "Weekly dog waste removal",
+      description: "We'll remove pet waste every week before mowing.",
+    },
+  ],
+},
+    ],
+  },
+   {
+    id: "one-time-details",
+    type: "form",
+     next: "address",
     title: "Tell us about the property",
     eyebrow: "Step 2 of 6",
     description: "These details help us estimate the scope before an on-site visit.",
@@ -108,38 +128,82 @@ export const SCREENS = [
         variant: "compact",
         label: "Property size",
         options: [
-          { value: "small", label: "Small", description: "Townhome or compact yard" },
-          { value: "medium", label: "Medium", description: "Typical suburban property" },
-          { value: "large", label: "Large", description: "Large lot or corner property" },
-          { value: "estate", label: "Estate", description: "Oversized or complex property" },
+          { value: "standard", label: "Standard", description: "Typical suburban property", info: "Lots up to 7,000 sq ft." },
+          { value: "large", label: "Large", description: "Large lot or corner property",  info: "Lots from 7,001 - 10,890 sq ft (1/4 acre)" },
+          { value: "custom", label: "Custom", description: "Extra large or unique property", info: "Lots over 10,890 sq ft (1/4 acre) require a custom quote" },
         ],
         rules: [{ type: "required", message: "Choose a property size." }],
       },
       {
-        name: "frequency",
-        type: "choice",
-        variant: "segmented",
-        label: "Preferred schedule",
-        options: [
-          { value: "one-time", label: "One-time" },
-          { value: "weekly", label: "Weekly" },
-          { value: "biweekly", label: "2 weeks" },
-          { value: "monthly", label: "Monthly" },
-        ],
-        rules: [{ type: "required", message: "Choose a preferred schedule." }],
-      },
+  name: "oneTimeServices",
+  type: "checkboxGroup",
+  label: "Which services are you interested in? Select all that apply.",
+  options: [
+    {
+      value: "propertyCleanup",
+      label: "Property Cleanup",
+      description:
+        "Remove debris, cut back overgrowth, and restore a tidy appearance.",
+    },
+    {
+      value: "gardenBedWeeding",
+      label: "Garden Bed Weeding",
+      description:
+        "Remove weeds from existing garden and landscape beds by hand.",
+    },
+    {
+      value: "mulchInstallation",
+      label: "Mulch Installation",
+      description:
+        "Install fresh mulch in existing garden and landscape beds.",
+    },
+    {
+      value: "fertilization",
+      label: "Fertilization",
+      description:
+        "Apply lawn fertilizer to encourage greener, thicker turf.",
+    },
+  ],
+  rules: [
+    {
+      type: "required",
+      message: "Choose at least one service.",
+    },
+  ],
+},
+    ],
+  },
+  {
+    id: "project-details",
+    type: "form",
+    next: "address",
+    title: "Tell us about the property",
+    eyebrow: "Step 2 of 6",
+    description: "These details help us estimate the scope before an on-site visit.",
+    nextLabel: "Continue",
+    fields: [
       {
-        name: "lawnCondition",
-        type: "choice",
-        variant: "compact",
-        label: "Current condition",
+        name: "addOns",
+        type: "checkboxGroup",
+        label: "Optional add-ons",
         options: [
-          { value: "maintained", label: "Maintained", description: "Needs routine care" },
-          { value: "overgrown", label: "Overgrown", description: "Needs extra attention" },
-          { value: "rescue", label: "Reset", description: "Needs a full cleanup" },
+          { value: "deepEdging", label: "Deep edging" },
+          { value: "weedControl", label: "Weed control" },
+          { value: "aeration", label: "Aeration" },
+          { value: "leafHaul", label: "Leaf haul-away" },
         ],
-        rules: [{ type: "required", message: "Choose the current condition." }],
       },
+    ],
+  },
+   {
+    id: "other-details",
+    type: "form",
+     next: "address",
+    title: "Tell us about the property",
+    eyebrow: "Step 2 of 6",
+    description: "These details help us estimate the scope before an on-site visit.",
+    nextLabel: "Continue",
+    fields: [
       {
         name: "addOns",
         type: "checkboxGroup",
@@ -159,7 +223,7 @@ export const SCREENS = [
     title: "Where is the property?",
     eyebrow: "Step 3 of 6",
     description: "We use the address to confirm routing and service availability.",
-    nextLabel: "Calculate estimate",
+    nextLabel: "Continue",
     fields: [
       {
         name: "street",
@@ -194,19 +258,10 @@ export const SCREENS = [
     ],
   },
   {
-    id: "estimate",
-    type: "estimate",
-    title: "Your starting estimate",
-    eyebrow: "Step 4 of 6",
-    description:
-      "This range is based on your answers. Final pricing is confirmed after Terra Verde reviews the property.",
-    nextLabel: "Add photos",
-  },
-  {
     id: "photos",
     type: "form",
     title: "Add helpful photos",
-    eyebrow: "Step 5 of 6",
+    eyebrow: "Step 4 of 6",
     description:
       "Photos are optional, but they help us confirm the estimate faster.",
     nextLabel: "Continue",
@@ -230,9 +285,9 @@ export const SCREENS = [
     id: "contact",
     type: "form",
     title: "How should we reach you?",
-    eyebrow: "Step 6 of 6",
+    eyebrow: "Step 5 of 6",
     description: "Share your contact details so we can follow up with a firm quote.",
-    nextLabel: "Send request",
+    nextLabel: "Review request",
     fields: [
       {
         name: "firstName",
@@ -288,6 +343,15 @@ export const SCREENS = [
       },
     ],
   },
+  {
+  id: "summary",
+  type: "summary",
+  title: "Review your request",
+  eyebrow: "Step 6 of 6",
+  description:
+    "Review your estimated price before requesting your final quote.",
+  nextLabel: "Submit request",
+},
   {
     id: "success",
     type: "success",

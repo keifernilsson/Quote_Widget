@@ -1,4 +1,5 @@
 import { h, visuallyHidden } from "./dom.js";
+import { formatCurrency } from "./quote-engine.js";
 
 export function Shell({ company, progress, children }) {
   return h(
@@ -151,7 +152,14 @@ export function CheckboxGroup({ field, value = [], error, onChange }) {
             },
           }),
           h("span", { class: "tvqa-check-box", "aria-hidden": "true" }),
-          h("span", { class: "tvqa-check-label" }, option.label)
+h(
+  "span",
+  {},
+  h("span", { class: "tvqa-check-label" }, option.label),
+  option.description
+    ? h("span", { class: "tvqa-choice-description" }, option.description)
+    : null
+)
         );
       })
     ),
@@ -267,11 +275,37 @@ export function FileInput({ field, value = [], error, onChange }) {
 }
 
 export function EstimatePanel({ estimate }) {
+  if (estimate.customQuoteRequired) {
+    return h(
+      "section",
+      { class: "tvqa-estimate", "aria-live": "polite" },
+      h("p", { class: "tvqa-estimate-label" }, "Estimate"),
+      h("p", { class: "tvqa-estimate-value" }, "Custom quote required"),
+      h("p", { class: "tvqa-disclaimer" }, estimate.disclaimer)
+    );
+  }
+const isOneTime = estimate.unit === "one-time";
+  const hasRestoration = estimate.restorationTotal > 0;
+
+  const firstVisitItems = [
+    ...estimate.weeklyLineItems,
+    ...estimate.restorationLineItems,
+  ];
+if (isOneTime) {
   return h(
     "section",
     { class: "tvqa-estimate", "aria-live": "polite" },
-    h("p", { class: "tvqa-estimate-label" }, "Estimated starting range"),
-    h("p", { class: "tvqa-estimate-value" }, estimate.summary),
+
+    h("p", { class: "tvqa-estimate-label" }, "Estimated One-Time Service"),
+
+    h(
+      "p",
+      { class: "tvqa-estimate-value" },
+      estimate.summary
+    ),
+
+    h("p", { class: "tvqa-estimate-label" }, "Includes:"),
+
     h(
       "div",
       { class: "tvqa-line-items" },
@@ -284,10 +318,132 @@ export function EstimatePanel({ estimate }) {
         )
       )
     ),
+
     h("p", { class: "tvqa-disclaimer" }, estimate.disclaimer)
   );
 }
+  return h(
+    "section",
+    { class: "tvqa-estimate", "aria-live": "polite" },
 
+    ...(hasRestoration
+      ? [
+          h("p", { class: "tvqa-estimate-label" }, "First Service Total"),
+          h(
+            "p",
+            { class: "tvqa-estimate-value" },
+            formatCurrency(estimate.firstServiceTotal)
+          ),
+
+          h(
+            "p",
+            { class: "tvqa-estimate-label" },
+            "Your first visit includes:"
+          ),
+
+          h(
+            "div",
+            { class: "tvqa-line-items" },
+            firstVisitItems.map((item) =>
+              h(
+                "div",
+                { class: "tvqa-line-item" },
+                h("span", {}, item.label),
+                h(
+                  "strong",
+                  {},
+                  item.label === "Initial Lawn Restoration"
+                    ? `${formatCurrency(item.amount)} one-time`
+                    : formatCurrency(item.amount)
+                )
+              )
+            )
+          ),
+
+          h(
+            "p",
+            { class: "tvqa-estimate-label" },
+            "Ongoing Weekly Service"
+          ),
+          h(
+            "p",
+            { class: "tvqa-estimate-value" },
+            `${formatCurrency(estimate.weeklyTotal)}/week`
+          ),
+        ]
+      : [
+          h(
+            "p",
+            { class: "tvqa-estimate-label" },
+            "Estimated Weekly Service"
+          ),
+          h(
+            "p",
+            { class: "tvqa-estimate-value" },
+            `${formatCurrency(estimate.weeklyTotal)}/week`
+          ),
+
+          h("p", { class: "tvqa-estimate-label" }, "Includes:"),
+
+          h(
+            "div",
+            { class: "tvqa-line-items" },
+            estimate.weeklyLineItems.map((item) =>
+              h(
+                "div",
+                { class: "tvqa-line-item" },
+                h("span", {}, item.label),
+                h("strong", {}, formatCurrency(item.amount))
+              )
+            )
+          ),
+        ]),
+
+    h("p", { class: "tvqa-disclaimer" }, estimate.disclaimer)
+  );
+}
+export function ReviewPanel({ submission }) {
+  const data = submission.data;
+
+  const address = [data.street, data.city, data.postalCode]
+    .filter(Boolean)
+    .join(", ");
+
+  const name = [data.firstName, data.lastName]
+    .filter(Boolean)
+    .join(" ");
+
+  return h(
+    "section",
+    { class: "tvqa-review-panel" },
+    h(
+      "dl",
+      { class: "tvqa-summary" },
+summaryRow("Service", submission.labels.service),
+
+data.oneTimeServices?.length
+  ? summaryRow(
+      "Requested services",
+      data.oneTimeServices
+        .map((value) => formatReviewValue(value))
+        .join(", ")
+    )
+  : null,
+
+data.propertySize
+  ? summaryRow("Property size", formatReviewValue(data.propertySize))
+  : null,
+      summaryRow("Property", address),
+      summaryRow("Name", name),
+      summaryRow("Email", data.email),
+      summaryRow("Phone", data.phone),
+      summaryRow(
+        "Preferred contact",
+        formatReviewValue(data.preferredContact)
+      )
+    )
+  );
+}
 export function SummaryPanel({ submission, estimate }) {
   const reference = submission?.reference || "TV-PENDING";
   return h(
@@ -358,7 +514,26 @@ function proofItem(label, value) {
     h("dd", {}, value)
   );
 }
+function formatReviewValue(value) {
+  if (!value) {
+    return "Not provided";
+  }
 
+  const labels = {
+    propertyCleanup: "Property Cleanup",
+    gardenBedWeeding: "Garden Bed Weeding",
+    mulchInstallation: "Mulch Installation",
+    fertilization: "Fertilization",
+  };
+
+  if (labels[value]) {
+    return labels[value];
+  }
+
+  return String(value)
+    .replaceAll("-", " ")
+    .replace(/\b\w/g, (letter) => letter.toUpperCase());
+}
 function summaryRow(label, value) {
   return h(
     "div",

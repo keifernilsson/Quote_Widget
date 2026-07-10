@@ -1,83 +1,223 @@
-const currency = new Intl.NumberFormat("en-US", {
+const currency = new Intl.NumberFormat("en-CA", {
   style: "currency",
-  currency: "USD",
+  currency: "CAD",
   maximumFractionDigits: 0,
 });
 
-export function calculateEstimate(data, rules) {
-  const service = rules.services[data.service] || rules.services.mowing;
-  const propertySize = rules.propertySizes[data.propertySize] || rules.propertySizes.medium;
-  const condition = rules.conditions[data.lawnCondition] || rules.conditions.maintained;
-  const frequency = rules.frequencies[data.frequency] || rules.frequencies["one-time"];
-  const addOns = Array.isArray(data.addOns) ? data.addOns : [];
+const MOWING_PRICE = 50;
 
-  const lineItems = [
+const PROPERTY_MULTIPLIERS = {
+  standard: 1,
+  large: 1.25,
+};
+
+const CONDITION_PRICES = {
+  maintained: 0,
+  overgrown: 20,
+  "initial-cleanup": 50,
+};
+
+const WEEKLY_ADD_ONS = {
+  bedWeeding: {
+    label: "Weekly Bed Weeding",
+    price: 10,
+  },
+  dogWasteRemoval: {
+    label: "Dog Waste Removal",
+    price: 10,
+  },
+};
+const ONE_TIME_PRICING = {
+  fertilization: {
+    label: "Fertilization",
+    standard: 75,
+    large: 99,
+  },
+};
+export function calculateEstimate(data) {
+  if (data.service === "mowing") {
+    return calculateMowingEstimate(data);
+  }
+
+  if (data.service === "one-time") {
+    return calculateOneTimeEstimate(data);
+  }
+
+  return customQuoteEstimate();
+}
+
+function calculateMowingEstimate(data) {
+  if (data.propertySize === "custom") {
+    return customQuoteEstimate();
+  }
+
+  const multiplier = PROPERTY_MULTIPLIERS[data.propertySize];
+
+  if (!multiplier) {
+    return customQuoteEstimate();
+  }
+
+  const selectedAddOns = Array.isArray(data.addOns)
+    ? data.addOns
+    : [];
+
+  const weeklyLineItems = [
     {
-      label: service.label,
-      amount: formatRange(service.low, service.high),
-    },
-    {
-      label: propertySize.label,
-      amount: formatModifier(propertySize.low, propertySize.high),
-    },
-    {
-      label: condition.label,
-      amount: formatModifier(condition.low, condition.high),
+      label: "Weekly Lawn Mowing",
+      amount: MOWING_PRICE * multiplier,
     },
   ];
 
-  let low = service.low + propertySize.low + condition.low;
-  let high = service.high + propertySize.high + condition.high;
+  let weeklySubtotal = MOWING_PRICE;
 
-  for (const addOnKey of addOns) {
-    const addOn = rules.addOns[addOnKey];
+  for (const addOnKey of selectedAddOns) {
+    const addOn = WEEKLY_ADD_ONS[addOnKey];
+
     if (!addOn) {
       continue;
     }
 
-    low += addOn.low;
-    high += addOn.high;
-    lineItems.push({
+    weeklySubtotal += addOn.price;
+
+    weeklyLineItems.push({
       label: addOn.label,
-      amount: formatModifier(addOn.low, addOn.high),
+      amount: addOn.price * multiplier,
     });
   }
 
-  if (service.unit === "per visit") {
-    low *= frequency.multiplier;
-    high *= frequency.multiplier;
-    lineItems.push({
-      label: `${frequency.label} schedule`,
-      amount: frequency.multiplier === 1 ? "Standard rate" : "Adjusted rate",
-    });
-  }
+  const weeklyTotal = weeklySubtotal * multiplier;
 
-  const buffer = rules.rangeBuffer || 0;
-  const bufferedLow = Math.max(0, Math.round(low * (1 - buffer)));
-  const bufferedHigh = Math.max(bufferedLow, Math.round(high * (1 + buffer)));
+  const conditionPrice =
+    CONDITION_PRICES[data.lawnCondition] ?? 0;
 
+  const restorationTotal = conditionPrice * multiplier;
+
+  const restorationLineItems =
+    restorationTotal > 0
+      ? [
+          {
+            label: "Initial Lawn Restoration",
+            amount: restorationTotal,
+          },
+        ]
+      : [];
+
+  const firstServiceTotal = weeklyTotal + restorationTotal;
+  
   return {
-    low: bufferedLow,
-    high: bufferedHigh,
-    unit: service.unit,
-    summary: `${formatCurrency(bufferedLow)} - ${formatCurrency(bufferedHigh)} ${service.unit}`,
-    lineItems,
+    customQuoteRequired: false,
+
+    low: weeklyTotal,
+    high: weeklyTotal,
+    unit: "per week",
+
+    weeklyTotal,
+    restorationTotal,
+    firstServiceTotal,
+
+    weeklyLineItems,
+    restorationLineItems,
+
+    summary: `${formatCurrency(weeklyTotal)}/week`,
+
+    // This keeps the current review page working until we
+    // update its layout in the next step.
+    lineItems: [
+      ...weeklyLineItems.map((item) => ({
+        label: item.label,
+        amount: formatCurrency(item.amount),
+      })),
+      ...restorationLineItems.map((item) => ({
+        label: item.label,
+        amount: `${formatCurrency(item.amount)} one-time`,
+      })),
+    ],
+
     disclaimer:
-      "Final pricing may change after Terra Verde reviews access, turf condition, disposal needs, and exact lot size.",
+      "This is an instant estimate. Final pricing is confirmed after Terra Verde reviews the property.",
   };
 }
+function calculateOneTimeEstimate(data) {
+  const selectedServices = Array.isArray(data.oneTimeServices)
+    ? data.oneTimeServices
+    : [];
 
+  if (data.propertySize === "custom") {
+    return customQuoteEstimate();
+  }
+
+  if (selectedServices.length !== 1) {
+    return customQuoteEstimate();
+  }
+
+  const serviceKey = selectedServices[0];
+  const servicePricing = ONE_TIME_PRICING[serviceKey];
+
+  if (!servicePricing) {
+    return customQuoteEstimate();
+  }
+
+  const total = servicePricing[data.propertySize];
+
+  if (!total) {
+    return customQuoteEstimate();
+  }
+
+  return {
+    customQuoteRequired: false,
+
+    low: total,
+    high: total,
+    unit: "one-time",
+
+    weeklyTotal: null,
+    restorationTotal: null,
+    firstServiceTotal: null,
+
+    weeklyLineItems: [],
+    restorationLineItems: [],
+
+    summary: `${formatCurrency(total)} one-time`,
+
+    lineItems: [
+      {
+        label: servicePricing.label,
+        amount: formatCurrency(total),
+      },
+    ],
+
+    disclaimer:
+      "This is an instant estimate. Final pricing is confirmed after Terra Verde reviews the property.",
+  };
+}
 export function formatCurrency(value) {
   return currency.format(value);
 }
 
-function formatRange(low, high) {
-  return `${formatCurrency(low)} - ${formatCurrency(high)}`;
-}
+function customQuoteEstimate() {
+  return {
+    customQuoteRequired: true,
 
-function formatModifier(low, high) {
-  if (low === 0 && high === 0) {
-    return "Included";
-  }
-  return `+${formatRange(low, high)}`;
+    low: null,
+    high: null,
+    unit: null,
+
+    weeklyTotal: null,
+    restorationTotal: null,
+
+    weeklyLineItems: [],
+    restorationLineItems: [],
+
+    summary: "Custom quote required",
+
+    lineItems: [
+      {
+        label: "Estimate",
+        amount: "Custom quote required",
+      },
+    ],
+
+    disclaimer:
+      "Terra Verde will review the property details and prepare a custom quote.",
+  };
 }
