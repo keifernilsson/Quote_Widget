@@ -28,40 +28,6 @@ export const SERVICE_OPTIONS = [
 },
 ];
 
-export const QUOTE_RULES = {
-  services: {
-    mowing: { label: "Mowing and edging", low: 44, high: 68, unit: "per visit" },
-    "spring-cleanup": { label: "Spring cleanup", low: 165, high: 260, unit: "project range" },
-    "garden-care": { label: "Garden bed care", low: 135, high: 230, unit: "project range" },
-    "seasonal-plan": { label: "Seasonal lawn plan", low: 185, high: 315, unit: "per month" },
-    "fertilization": { label: "Fertilization", low: 120, high: 200, unit: "per application" },
-  },
-  propertySizes: {
-    small: { label: "Townhome or small yard", low: 0, high: 0 },
-    medium: { label: "Standard suburban yard", low: 18, high: 34 },
-    large: { label: "Large yard", low: 42, high: 78 },
-    estate: { label: "Estate or oversized lot", low: 85, high: 150 },
-  },
-  conditions: {
-    maintained: { label: "Already maintained", low: 0, high: 0 },
-    overgrown: { label: "A little overgrown", low: 18, high: 44 },
-    rescue: { label: "Needs a reset", low: 55, high: 115 },
-  },
-  frequencies: {
-    "one-time": { label: "One-time", multiplier: 1 },
-    weekly: { label: "Weekly", multiplier: 0.9 },
-    biweekly: { label: "Every 2 weeks", multiplier: 0.96 },
-    monthly: { label: "Monthly", multiplier: 1.06 },
-  },
-  addOns: {
-    deepEdging: { label: "Deep edging", low: 12, high: 28 },
-    weedControl: { label: "Weed control", low: 24, high: 48 },
-    aeration: { label: "Aeration", low: 65, high: 120 },
-    leafHaul: { label: "Leaf or debris haul-away", low: 45, high: 110 },
-  },
-  rangeBuffer: 0.08,
-};
-
 export const SCREENS = [
   {
     id: "welcome",
