@@ -1,4 +1,4 @@
-import { SCREENS, COMPANY, QUOTE_RULES } from "./config.js";
+import { SCREENS, COMPANY } from "./config.js";
 import { createStateMachine } from "./state-machine.js";
 import { validateScreen } from "./validation.js";
 import { calculateEstimate } from "./quote-engine.js";
@@ -18,7 +18,6 @@ import {
 const DEFAULTS = {
   screens: SCREENS,
   company: COMPANY,
-  quoteRules: QUOTE_RULES,
   assetBaseUrl: new URL("../", import.meta.url).toString(),
 };
 
