@@ -389,10 +389,20 @@ export function ReviewPanel({ submission }) {
     h(
       "dl",
       { class: "tvqa-summary" },
-      summaryRow("Service", submission.labels.service),
-      data.propertySize
-        ? summaryRow("Property size", formatReviewValue(data.propertySize))
-        : null,
+summaryRow("Service", submission.labels.service),
+
+data.oneTimeServices?.length
+  ? summaryRow(
+      "Requested services",
+      data.oneTimeServices
+        .map((value) => formatReviewValue(value))
+        .join(", ")
+    )
+  : null,
+
+data.propertySize
+  ? summaryRow("Property size", formatReviewValue(data.propertySize))
+  : null,
       summaryRow("Property", address),
       summaryRow("Name", name),
       summaryRow("Email", data.email),
