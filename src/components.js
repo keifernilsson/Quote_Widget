@@ -285,6 +285,8 @@ export function EstimatePanel({ estimate }) {
     );
   }
 
+  const hasRestoration = estimate.restorationTotal > 0;
+
   const firstVisitItems = [
     ...estimate.weeklyLineItems,
     ...estimate.restorationLineItems,
@@ -294,40 +296,78 @@ export function EstimatePanel({ estimate }) {
     "section",
     { class: "tvqa-estimate", "aria-live": "polite" },
 
-    h("p", { class: "tvqa-estimate-label" }, "First Service Total"),
-    h(
-      "p",
-      { class: "tvqa-estimate-value" },
-      formatCurrency(estimate.firstServiceTotal)
-    ),
-
-    h("p", { class: "tvqa-estimate-label" }, "Your first visit includes:"),
-
-    h(
-      "div",
-      { class: "tvqa-line-items" },
-      firstVisitItems.map((item) =>
-        h(
-          "div",
-          { class: "tvqa-line-item" },
-          h("span", {}, item.label),
+    ...(hasRestoration
+      ? [
+          h("p", { class: "tvqa-estimate-label" }, "First Service Total"),
           h(
-            "strong",
-            {},
-            item.label === "Initial Lawn Restoration"
-              ? `${formatCurrency(item.amount)} one-time`
-              : formatCurrency(item.amount)
-          )
-        )
-      )
-    ),
+            "p",
+            { class: "tvqa-estimate-value" },
+            formatCurrency(estimate.firstServiceTotal)
+          ),
 
-    h("p", { class: "tvqa-estimate-label" }, "Ongoing Weekly Service"),
-    h(
-      "p",
-      { class: "tvqa-estimate-value" },
-      `${formatCurrency(estimate.weeklyTotal)}/week`
-    ),
+          h(
+            "p",
+            { class: "tvqa-estimate-label" },
+            "Your first visit includes:"
+          ),
+
+          h(
+            "div",
+            { class: "tvqa-line-items" },
+            firstVisitItems.map((item) =>
+              h(
+                "div",
+                { class: "tvqa-line-item" },
+                h("span", {}, item.label),
+                h(
+                  "strong",
+                  {},
+                  item.label === "Initial Lawn Restoration"
+                    ? `${formatCurrency(item.amount)} one-time`
+                    : formatCurrency(item.amount)
+                )
+              )
+            )
+          ),
+
+          h(
+            "p",
+            { class: "tvqa-estimate-label" },
+            "Ongoing Weekly Service"
+          ),
+          h(
+            "p",
+            { class: "tvqa-estimate-value" },
+            `${formatCurrency(estimate.weeklyTotal)}/week`
+          ),
+        ]
+      : [
+          h(
+            "p",
+            { class: "tvqa-estimate-label" },
+            "Estimated Weekly Service"
+          ),
+          h(
+            "p",
+            { class: "tvqa-estimate-value" },
+            `${formatCurrency(estimate.weeklyTotal)}/week`
+          ),
+
+          h("p", { class: "tvqa-estimate-label" }, "Includes:"),
+
+          h(
+            "div",
+            { class: "tvqa-line-items" },
+            estimate.weeklyLineItems.map((item) =>
+              h(
+                "div",
+                { class: "tvqa-line-item" },
+                h("span", {}, item.label),
+                h("strong", {}, formatCurrency(item.amount))
+              )
+            )
+          ),
+        ]),
 
     h("p", { class: "tvqa-disclaimer" }, estimate.disclaimer)
   );
