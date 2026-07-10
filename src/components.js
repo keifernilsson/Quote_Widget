@@ -284,14 +284,44 @@ export function EstimatePanel({ estimate }) {
       h("p", { class: "tvqa-disclaimer" }, estimate.disclaimer)
     );
   }
-
+const isOneTime = estimate.unit === "one-time";
   const hasRestoration = estimate.restorationTotal > 0;
 
   const firstVisitItems = [
     ...estimate.weeklyLineItems,
     ...estimate.restorationLineItems,
   ];
+if (isOneTime) {
+  return h(
+    "section",
+    { class: "tvqa-estimate", "aria-live": "polite" },
 
+    h("p", { class: "tvqa-estimate-label" }, "Estimated One-Time Service"),
+
+    h(
+      "p",
+      { class: "tvqa-estimate-value" },
+      estimate.summary
+    ),
+
+    h("p", { class: "tvqa-estimate-label" }, "Includes:"),
+
+    h(
+      "div",
+      { class: "tvqa-line-items" },
+      estimate.lineItems.map((item) =>
+        h(
+          "div",
+          { class: "tvqa-line-item" },
+          h("span", {}, item.label),
+          h("strong", {}, item.amount)
+        )
+      )
+    ),
+
+    h("p", { class: "tvqa-disclaimer" }, estimate.disclaimer)
+  );
+}
   return h(
     "section",
     { class: "tvqa-estimate", "aria-live": "polite" },
