@@ -101,7 +101,7 @@ export const SCREENS = [
     next: "address",
     title: "Tell us about the property",
     eyebrow: "Step 2 of 6",
-    description: "These details help us estimate the scope before an on-site visit.",
+    description: "Tell us about the property so we can estimate your weekly mowing price.",
     nextLabel: "Continue",
     fields: [
       {
@@ -122,12 +122,29 @@ export const SCREENS = [
         variant: "compact",
         label: "Current condition",
         options: [
-          { value: "maintained", label: "Maintained", description: "Needs routine care" },
-          { value: "overgrown", label: "Overgrown", description: "Needs extra attention" },
-          { value: "rescue", label: "Reset", description: "Needs a full cleanup" },
+          { value: "maintained", label: "Maintained", description: "Currently being mowed on a routine schedule" },
+          { value: "overgrown", label: "Overgrown", description: "Longer than normal, but still mowable" },
+          { value: "initial-cleanup", label: "Reset", description: "Significant growth/requires a full cleanup" },
         ],
         rules: [{ type: "required", message: "Choose the current condition." }],
       },
+      {
+  name: "addOns",
+  type: "checkboxGroup",
+  label: "Optional add-ons",
+  options: [
+    {
+      value: "bedWeeding",
+      label: "Weekly garden bed weeding",
+      description: "Keep your flower beds neat with routine weed removal.",
+    },
+    {
+      value: "dogWasteRemoval",
+      label: "Weekly dog waste removal",
+      description: "We'll remove pet waste every week before mowing.",
+    },
+  ],
+},
     ],
   },
    {
