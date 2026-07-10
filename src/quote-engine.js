@@ -88,6 +88,8 @@ export function calculateEstimate(data, rules) {
         ]
       : [];
 
+  const firstServiceTotal = weeklyTotal + restorationTotal;
+  
   return {
     customQuoteRequired: false,
 
@@ -97,6 +99,7 @@ export function calculateEstimate(data, rules) {
 
     weeklyTotal,
     restorationTotal,
+    firstServiceTotal,
 
     weeklyLineItems,
     restorationLineItems,
