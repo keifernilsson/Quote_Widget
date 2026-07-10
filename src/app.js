@@ -1,4 +1,4 @@
-import { SCREENS, COMPANY } from "./config.js";
+import { SCREENS, COMPANY, SERVICE_OPTIONS } from "./config.js";
 import { createStateMachine } from "./state-machine.js";
 import { validateScreen } from "./validation.js";
 import { calculateEstimate } from "./quote-engine.js";
@@ -257,7 +257,9 @@ if (screen.type === "summary") {
 
 function createSubmissionPayload(data, estimate, options) {
   const reference = `TV-${Date.now().toString(36).toUpperCase()}`;
-  const service = options.quoteRules.services[data.service]?.label || data.service;
+  const service =
+  SERVICE_OPTIONS.find((option) => option.value === data.service)?.label ||
+  data.service;
 
   return {
     reference,
