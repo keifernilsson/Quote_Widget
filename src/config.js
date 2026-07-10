@@ -215,7 +215,7 @@ export const SCREENS = [
     title: "Where is the property?",
     eyebrow: "Step 3 of 6",
     description: "We use the address to confirm routing and service availability.",
-    nextLabel: "Calculate estimate",
+    nextLabel: "Continue",
     fields: [
       {
         name: "street",
@@ -279,7 +279,7 @@ export const SCREENS = [
     title: "How should we reach you?",
     eyebrow: "Step 5 of 6",
     description: "Share your contact details so we can follow up with a firm quote.",
-    nextLabel: "Send request",
+    nextLabel: "Review request",
     fields: [
       {
         name: "firstName",
