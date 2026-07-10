@@ -55,9 +55,9 @@ export class QuoteAssistant {
   "project-details": 2,
   "other-details": 2,
   address: 3,
-  estimate: 4,
-  photos: 5,
-  contact: 6,
+  photos: 4,
+  contact: 5,
+  summary: 6,
 };
     const progressTotal = 6;
 const progressIndex = (PROGRESS_STEPS[screen.id] ?? 1) - 1;
@@ -111,6 +111,24 @@ const progressIndex = (PROGRESS_STEPS[screen.id] ?? 1) - 1;
         ScreenIntro({ screen }),
         EstimatePanel({ estimate })
       );
+      }
+      if (screen.type === "summary") {
+  const previewSubmission = createSubmissionPayload(
+    state.data,
+    estimate,
+    this.options
+  );
+
+  return h(
+    "div",
+    { class: "tvqa-screen" },
+    ScreenIntro({ screen }),
+    EstimatePanel({ estimate }),
+    SummaryPanel({
+      submission: previewSubmission,
+      estimate,
+    })
+  );
     }
 
     if (screen.type === "success") {
@@ -175,7 +193,7 @@ const progressIndex = (PROGRESS_STEPS[screen.id] ?? 1) - 1;
       }
     }
 
-    if (screen.id === "contact") {
+    if (screen.id === "summary") {
       const payload = createSubmissionPayload(state.data, estimate, this.options);
       this.options.onSubmit?.(payload);
       this.mount.dispatchEvent(
