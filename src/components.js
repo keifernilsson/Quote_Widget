@@ -287,7 +287,38 @@ export function EstimatePanel({ estimate }) {
     h("p", { class: "tvqa-disclaimer" }, estimate.disclaimer)
   );
 }
+export function ReviewPanel({ submission }) {
+  const data = submission.data;
 
+  const address = [data.street, data.city, data.postalCode]
+    .filter(Boolean)
+    .join(", ");
+
+  const name = [data.firstName, data.lastName]
+    .filter(Boolean)
+    .join(" ");
+
+  return h(
+    "section",
+    { class: "tvqa-review-panel" },
+    h(
+      "dl",
+      { class: "tvqa-summary" },
+      summaryRow("Service", submission.labels.service),
+      data.propertySize
+        ? summaryRow("Property size", formatReviewValue(data.propertySize))
+        : null,
+      summaryRow("Property", address),
+      summaryRow("Name", name),
+      summaryRow("Email", data.email),
+      summaryRow("Phone", data.phone),
+      summaryRow(
+        "Preferred contact",
+        formatReviewValue(data.preferredContact)
+      )
+    )
+  );
+}
 export function SummaryPanel({ submission, estimate }) {
   const reference = submission?.reference || "TV-PENDING";
   return h(
@@ -358,7 +389,15 @@ function proofItem(label, value) {
     h("dd", {}, value)
   );
 }
+function formatReviewValue(value) {
+  if (!value) {
+    return "Not provided";
+  }
 
+  return String(value)
+    .replaceAll("-", " ")
+    .replace(/\b\w/g, (letter) => letter.toUpperCase());
+}
 function summaryRow(label, value) {
   return h(
     "div",
