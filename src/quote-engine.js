@@ -27,7 +27,13 @@ const WEEKLY_ADD_ONS = {
     price: 10,
   },
 };
-
+const ONE_TIME_PRICING = {
+  fertilization: {
+    label: "Fertilization",
+    standard: 75,
+    large: 99,
+  },
+};
 export function calculateEstimate(data, rules) {
   if (data.service !== "mowing") {
     return customQuoteEstimate();
