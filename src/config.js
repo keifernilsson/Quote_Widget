@@ -341,7 +341,7 @@ export const SCREENS = [
   title: "Review your request",
   eyebrow: "Step 6 of 6",
   description:
-    "Review your information and starting estimate before submitting your request.",
+    "Review your estimated price before requesting your final quote.",
   nextLabel: "Submit request",
 },
   {
