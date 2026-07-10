@@ -34,11 +34,19 @@ const ONE_TIME_PRICING = {
     large: 99,
   },
 };
-export function calculateEstimate(data, rules) {
-  if (data.service !== "mowing") {
-    return customQuoteEstimate();
+export function calculateEstimate(data) {
+  if (data.service === "mowing") {
+    return calculateMowingEstimate(data);
   }
 
+  if (data.service === "one-time") {
+    return calculateOneTimeEstimate(data);
+  }
+
+  return customQuoteEstimate();
+}
+
+function calculateMowingEstimate(data) {
   if (data.propertySize === "custom") {
     return customQuoteEstimate();
   }
@@ -129,7 +137,59 @@ export function calculateEstimate(data, rules) {
       "This is an instant estimate. Final pricing is confirmed after Terra Verde reviews the property.",
   };
 }
+function calculateOneTimeEstimate(data) {
+  const selectedServices = Array.isArray(data.oneTimeServices)
+    ? data.oneTimeServices
+    : [];
 
+  if (data.propertySize === "custom") {
+    return customQuoteEstimate();
+  }
+
+  if (selectedServices.length !== 1) {
+    return customQuoteEstimate();
+  }
+
+  const serviceKey = selectedServices[0];
+  const servicePricing = ONE_TIME_PRICING[serviceKey];
+
+  if (!servicePricing) {
+    return customQuoteEstimate();
+  }
+
+  const total = servicePricing[data.propertySize];
+
+  if (!total) {
+    return customQuoteEstimate();
+  }
+
+  return {
+    customQuoteRequired: false,
+
+    low: total,
+    high: total,
+    unit: "one-time",
+
+    weeklyTotal: null,
+    restorationTotal: null,
+    firstServiceTotal: null,
+
+    weeklyLineItems: [],
+    restorationLineItems: [],
+
+    summary: `${formatCurrency(total)} one-time`,
+
+    lineItems: [
+      {
+        label: servicePricing.label,
+        amount: formatCurrency(total),
+      },
+    ],
+
+    disclaimer:
+      "This is an instant estimate. Final pricing is confirmed after Terra Verde reviews the property.",
+  };
+}
 export function formatCurrency(value) {
   return currency.format(value);
 }
