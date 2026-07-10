@@ -8,7 +8,7 @@ export const COMPANY = {
 export const SERVICE_OPTIONS = [
   {
   value: "mowing",
-  label: "Weekly Lawn Maintenance",
+  label: "Lawn Maintenance",
   description: "Weekly mowing, edging and blowing throughout the growing season.",
 },
 {
@@ -250,19 +250,10 @@ export const SCREENS = [
     ],
   },
   {
-    id: "estimate",
-    type: "estimate",
-    title: "Your starting estimate",
-    eyebrow: "Step 4 of 6",
-    description:
-      "This range is based on your answers. Final pricing is confirmed after Terra Verde reviews the property.",
-    nextLabel: "Add photos",
-  },
-  {
     id: "photos",
     type: "form",
     title: "Add helpful photos",
-    eyebrow: "Step 5 of 6",
+    eyebrow: "Step 4 of 6",
     description:
       "Photos are optional, but they help us confirm the estimate faster.",
     nextLabel: "Continue",
@@ -286,7 +277,7 @@ export const SCREENS = [
     id: "contact",
     type: "form",
     title: "How should we reach you?",
-    eyebrow: "Step 6 of 6",
+    eyebrow: "Step 5 of 6",
     description: "Share your contact details so we can follow up with a firm quote.",
     nextLabel: "Send request",
     fields: [
@@ -344,6 +335,15 @@ export const SCREENS = [
       },
     ],
   },
+  {
+  id: "summary",
+  type: "summary",
+  title: "Review your request",
+  eyebrow: "Step 6 of 6",
+  description:
+    "Review your information and starting estimate before submitting your request.",
+  nextLabel: "Submit request",
+},
   {
     id: "success",
     type: "success",
