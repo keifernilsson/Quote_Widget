@@ -151,7 +151,14 @@ export function CheckboxGroup({ field, value = [], error, onChange }) {
             },
           }),
           h("span", { class: "tvqa-check-box", "aria-hidden": "true" }),
-          h("span", { class: "tvqa-check-label" }, option.label)
+h(
+  "span",
+  {},
+  h("span", { class: "tvqa-check-label" }, option.label),
+  option.description
+    ? h("span", { class: "tvqa-choice-description" }, option.description)
+    : null
+)
         );
       })
     ),
