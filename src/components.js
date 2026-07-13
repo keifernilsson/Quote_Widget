@@ -1,6 +1,8 @@
 import { h, visuallyHidden } from "./dom.js";
 import { formatCurrency } from "./quote-engine.js";
 
+const openServiceGroups = new Set();
+
 export function Shell({ company, progress, children }) {
   return h(
     "section",
@@ -204,8 +206,16 @@ export function CheckboxGroup({ field, value = [], error, onChange }) {
         h(
           "details",
           {
-            class: "tvqa-service-group",
-          },
+  class: "tvqa-service-group",
+  open: openServiceGroups.has(groupName),
+  onToggle: (event) => {
+    if (event.currentTarget.open) {
+      openServiceGroups.add(groupName);
+    } else {
+      openServiceGroups.delete(groupName);
+    }
+  },
+},
 
          h(
   "summary",
