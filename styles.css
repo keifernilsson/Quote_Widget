@@ -758,3 +758,18 @@
   margin-bottom: 10px;
   background: #f3f7f1;
 }
+/* ---------- Compact Service Cards ---------- */
+
+.tvqa-service-group .tvqa-check {
+  padding: 12px;
+  min-height: auto;
+}
+
+.tvqa-service-group .tvqa-check-list {
+  gap: 8px;
+}
+
+.tvqa-service-group .tvqa-choice-description {
+  margin-top: 3px;
+  line-height: 1.35;
+}
