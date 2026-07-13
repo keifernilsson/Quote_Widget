@@ -2,7 +2,7 @@ export const COMPANY = {
   name: "Terra Verde Lawn Company",
   phone: "(403) 635-7460",
   email: "terraverdelethbridge@gmail.com",
-  serviceArea: "Lethbridge",
+  serviceArea: "Lethbridge, AB",
 };
 
 export const SERVICE_OPTIONS = [
@@ -140,23 +140,47 @@ export const SCREENS = [
   label: "Which services are you interested in? Select all that apply.",
   options: [
     {
-  value: "cleanup",
-  label: "Property Cleanup",
+  value: "debrisRemoval",
+  label: "Debris Removal",
   description:
-    "Clean up overgrowth, weeds, debris, or neglected areas.",
+    "Remove leaves, branches, yard waste, and other outdoor debris from the property.",
 },
-    {
-      value: "mulchInstallation",
-      label: "Mulch Installation",
-      description:
-        "Install fresh mulch in existing garden and landscape beds.",
-    },
-    {
-      value: "fertilization",
-      label: "Fertilization",
-      description:
-        "Apply lawn fertilizer to encourage greener, thicker turf.",
-    },
+{
+  value: "bedWeeding",
+  label: "Garden Bed Weeding",
+  description:
+    "Remove weeds from existing garden and landscape beds to restore a tidy appearance.",
+},
+{
+  value: "overgrowthRemoval",
+  label: "Overgrowth Removal",
+  description:
+    "Cut back tall grass, weeds, and overgrown vegetation to restore neglected areas.",
+},
+{
+  value: "edgeRestoration",
+  label: "Edge Restoration",
+  description:
+    "Re-establish clean, defined edges around lawns, garden beds, and walkways.",
+},
+{
+  value: "cleanup",
+  label: "Full Property Cleanup",
+  description:
+    "Restore the entire property with a complete cleanup, including any combination of debris removal, overgrowth removal, bed weeding, and edge restoration as needed.",
+},
+{
+  value: "mulchInstallation",
+  label: "Mulch Installation",
+  description:
+    "Supply and install fresh mulch to improve the appearance and health of landscape beds.",
+},
+{
+  value: "fertilization",
+  label: "Fertilization",
+  description:
+    "Apply premium slow-release fertilizer to promote a greener, healthier lawn.",
+},
   ],
   rules: [
     {
@@ -198,25 +222,30 @@ export const SCREENS = [
     name: "cleanupLevel",
     type: "choice",
     variant: "compact",
-    label: "What level of cleanup is required?",
+    label: "What is the scale of cleanup required?",
     description:
-      "We'll review your photos and confirm the final cleanup level before providing your final quote.",
+      "We'll review your photos and confirm before providing your final quote.",
     showWhen: {
-  oneTimeServices: "cleanup",
-  cleanupScope: ["partial", "full"],
+  oneTimeServices: [
+    "debrisRemoval",
+    "bedWeeding",
+    "overgrowthRemoval",
+    "edgeRestoration",
+    "cleanup",
+  ],
 },
     options: [
       {
         value: "minor",
         label: "Minor",
         description:
-          "Light overgrowth, scattered leaves or debris, and only a small amount of cleanup required.",
+          "The property is generally maintained and only needs a light cleanup.",
       },
       {
         value: "moderate",
         label: "Moderate",
         description:
-          "Noticeable overgrowth, weeds, or debris throughout the property.",
+  "The property has fallen behind and requires a thorough cleanup.",
       },
       {
         value: "extensive",
