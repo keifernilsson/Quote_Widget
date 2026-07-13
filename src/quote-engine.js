@@ -127,6 +127,7 @@ function calculateMowingEstimate(data) {
     unit: "per month",
 
     weeklyTotal,
+    monthlyTotal,
     restorationTotal,
     firstServiceTotal,
 
