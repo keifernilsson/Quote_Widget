@@ -117,9 +117,9 @@ export const SCREENS = [
     id: "one-time-details",
     type: "form",
      next: "address",
-    title: "Tell us about the property",
+    title: "Choose your services",
     eyebrow: "Step 2 of 6",
-    description: "These details help us estimate the scope before an on-site visit.",
+    description: "Select the work you would like completed.",
     nextLabel: "Continue",
     fields: [
       {
