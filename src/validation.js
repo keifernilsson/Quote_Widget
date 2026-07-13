@@ -31,11 +31,43 @@ const VALIDATORS = {
   },
 };
 
+export function isFieldVisible(field, data) {
+  if (!field.showWhen) {
+    return true;
+  }
+
+  return Object.entries(field.showWhen).every(
+    ([controllingField, expectedValue]) => {
+      const actualValue = data[controllingField];
+
+      if (Array.isArray(actualValue)) {
+        const expectedValues = Array.isArray(expectedValue)
+          ? expectedValue
+          : [expectedValue];
+
+        return expectedValues.some((value) =>
+          actualValue.includes(value)
+        );
+      }
+
+      if (Array.isArray(expectedValue)) {
+        return expectedValue.includes(actualValue);
+      }
+
+      return actualValue === expectedValue;
+    }
+  );
+}
+
 export function validateScreen(screen, data) {
   const errors = {};
 
   for (const field of screen.fields || []) {
-    for (const rule of field.rules || []) {
+  if (!isFieldVisible(field, data)) {
+    continue;
+  }
+
+  for (const rule of field.rules || []) {
       const validator = VALIDATORS[rule.type];
       if (!validator) {
         continue;
