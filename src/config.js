@@ -123,18 +123,6 @@ export const SCREENS = [
     nextLabel: "Continue",
     fields: [
       {
-        name: "propertySize",
-        type: "choice",
-        variant: "compact",
-        label: "Property size",
-        options: [
-          { value: "standard", label: "Standard", description: "Typical suburban property", info: "Lots up to 7,000 sq ft." },
-          { value: "large", label: "Large", description: "Large lot or corner property",  info: "Lots from 7,001 - 10,890 sq ft (1/4 acre)" },
-          { value: "custom", label: "Custom", description: "Extra large or unique property", info: "Lots over 10,890 sq ft (1/4 acre) require a custom quote" },
-        ],
-        rules: [{ type: "required", message: "Choose a property size." }],
-      },
-      {
   name: "oneTimeServices",
   type: "checkboxGroup",
   label: "Which services are you interested in? Select all that apply.",
@@ -254,6 +242,18 @@ export const SCREENS = [
       },
     ],
   },
+       {
+        name: "propertySize",
+        type: "choice",
+        variant: "compact",
+        label: "Property size",
+        options: [
+          { value: "standard", label: "Standard", description: "Typical suburban property", info: "Lots up to 7,000 sq ft." },
+          { value: "large", label: "Large", description: "Large lot or corner property",  info: "Lots from 7,001 - 10,890 sq ft (1/4 acre)" },
+          { value: "custom", label: "Custom", description: "Extra large or unique property", info: "Lots over 10,890 sq ft (1/4 acre) require a custom quote" },
+        ],
+        rules: [{ type: "required", message: "Choose a property size." }],
+      },
     ],
   },
   {
