@@ -777,5 +777,41 @@
 }
 
 .tvqa-check--featured-spacing {
-  margin-top: 16px;
+  position: relative;
+  margin-top: 42px;
+}
+
+.tvqa-check--featured-spacing::before {
+  content: "OR";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #6f756f;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+.tvqa-check--featured-spacing::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -20px;
+
+  height: 1px;
+  background: #d8ded8;
+  z-index: 0;
+}
+
+.tvqa-check--featured-spacing::before {
+  width: 46px;
+  margin: 0 auto;
+  background: white;
+  z-index: 1;
 }
