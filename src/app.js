@@ -145,15 +145,17 @@ if (screen.type === "summary") {
       h(
         "div",
         { class: "tvqa-fields" },
-        (screen.fields || []).map((field) =>
-          FieldRenderer({
-            field,
-            value: state.data[field.name],
-            data: state.data,
-            error: this.errors[field.name],
-            onChange: (name, value) => this.updateField(name, value),
-          })
-        )
+       (screen.fields || [])
+  .filter((field) => isFieldVisible(field, state.data))
+  .map((field) =>
+    FieldRenderer({
+      field,
+      value: state.data[field.name],
+      data: state.data,
+      error: this.errors[field.name],
+      onChange: (name, value) => this.updateField(name, value),
+    })
+  )
       )
     );
   }
