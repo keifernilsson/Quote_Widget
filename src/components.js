@@ -126,43 +126,107 @@ export function ChoiceGroup({ field, value, error, onChange }) {
 export function CheckboxGroup({ field, value = [], error, onChange }) {
   const selected = Array.isArray(value) ? value : [];
 
+  const groups = field.options.reduce((result, option) => {
+    const groupName = option.group || "Services";
+
+    if (!result[groupName]) {
+      result[groupName] = [];
+    }
+
+    result[groupName].push(option);
+    return result;
+  }, {});
+
+  function renderOption(option) {
+    const checked = selected.includes(option.value);
+
+    return h(
+      "label",
+      {
+        class: [
+          "tvqa-check",
+          checked && "is-selected",
+          option.featured && "tvqa-check--featured",
+        ],
+        dataset: {
+          tvqaField: field.name,
+          tvqaValue: option.value,
+        },
+      },
+      h("input", {
+        type: "checkbox",
+        checked,
+        onChange: () => {
+          const next = checked
+            ? selected.filter((item) => item !== option.value)
+            : [...selected, option.value];
+
+          onChange(field.name, next);
+        },
+      }),
+      h("span", {
+        class: "tvqa-check-box",
+        "aria-hidden": "true",
+      }),
+      h(
+        "span",
+        {},
+        h(
+          "span",
+          { class: "tvqa-check-label" },
+          option.label
+        ),
+        option.description
+          ? h(
+              "span",
+              { class: "tvqa-choice-description" },
+              option.description
+            )
+          : null
+      )
+    );
+  }
+
   return h(
     "fieldset",
-    { class: fieldClass(field, error), "aria-describedby": errorId(field) },
+    {
+      class: fieldClass(field, error),
+      "aria-describedby": errorId(field),
+    },
     h("legend", { class: "tvqa-field-label" }, field.label),
+
     h(
       "div",
-      { class: "tvqa-check-list" },
-      field.options.map((option) => {
-        const checked = selected.includes(option.value);
-        return h(
-          "label",
+      { class: "tvqa-service-groups" },
+
+      Object.entries(groups).map(([groupName, options], index) =>
+        h(
+          "details",
           {
-            class: ["tvqa-check", checked && "is-selected"],
-            dataset: { tvqaField: field.name, tvqaValue: option.value },
+            class: "tvqa-service-group",
+            open: index === 0,
           },
-          h("input", {
-            type: "checkbox",
-            checked,
-            onChange: () => {
-              const next = checked
-                ? selected.filter((item) => item !== option.value)
-                : [...selected, option.value];
-              onChange(field.name, next);
-            },
-          }),
-          h("span", { class: "tvqa-check-box", "aria-hidden": "true" }),
-h(
-  "span",
-  {},
-  h("span", { class: "tvqa-check-label" }, option.label),
-  option.description
-    ? h("span", { class: "tvqa-choice-description" }, option.description)
-    : null
-)
-        );
-      })
+
+          h(
+            "summary",
+            { class: "tvqa-service-group-summary" },
+            h("span", {}, groupName),
+            h(
+              "span",
+              { class: "tvqa-service-group-count" },
+              String(options.length)
+            )
+          ),
+
+          h(
+            "div",
+            { class: "tvqa-check-list" },
+            options.map(renderOption)
+          )
+        )
+      )
     ),
+
     FieldError({ field, error })
   );
 }
