@@ -275,7 +275,7 @@ export function TextInput({ field, value = "", error, onChange }) {
       autocomplete: field.autocomplete || "off",
       "aria-invalid": error ? "true" : "false",
       "aria-describedby": errorId(field),
-      onInput: (event) => onChange(field.name, event.target.value),
+      onChange: (event) => onChange(field.name, event.target.value),
     }),
     FieldError({ field, error })
   );
@@ -296,7 +296,7 @@ export function Textarea({ field, value = "", error, onChange }) {
       rows: 4,
       "aria-invalid": error ? "true" : "false",
       "aria-describedby": errorId(field),
-      onInput: (event) => onChange(field.name, event.target.value),
+      onChange: (event) => onChange(field.name, event.target.value),
     }),
     FieldError({ field, error })
   );
