@@ -247,6 +247,8 @@ export const SCREENS = [
         type: "choice",
         variant: "compact",
         label: "Property size",
+        description:
+  "Choose the approximate size of your property so we can generate a more accurate estimate.",
         options: [
           { value: "standard", label: "Standard", description: "Typical suburban property", info: "Lots up to 7,000 sq ft." },
           { value: "large", label: "Large", description: "Large lot or corner property",  info: "Lots from 7,001 - 10,890 sq ft (1/4 acre)" },
