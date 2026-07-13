@@ -704,20 +704,22 @@
 
 .tvqa-check--featured {
   border: 2px solid var(--tvqa-marigold);
-  background: #fffdf8;
+  background: linear-gradient(to bottom, #fffdf9, #fff9ef);
+  margin-top: 10px;
 }
 
 .tvqa-check--featured .tvqa-check-label {
   font-weight: 800;
+  font-size: 1.05rem;
 }
 
 .tvqa-check--featured .tvqa-choice-description {
-  color: #6b5d2e;
+  color: #5f5426;
 }
 
 .tvqa-check--featured.is-selected {
   border-color: var(--tvqa-marigold);
-  background: #fff8e8;
+  background: linear-gradient(to bottom, #fff7e8, #fff2d8);
 }
 /* ---------- Service Group Headings ---------- */
 
