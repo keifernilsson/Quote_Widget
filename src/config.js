@@ -202,8 +202,9 @@ export const SCREENS = [
     description:
       "We'll review your photos and confirm the final cleanup level before providing your final quote.",
     showWhen: {
-      oneTimeServices: "cleanup",
-    },
+  oneTimeServices: "cleanup",
+  cleanupScope: ["partial", "full"],
+},
     options: [
       {
         value: "minor",
