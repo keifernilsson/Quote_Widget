@@ -165,6 +165,41 @@ function calculateOneTimeEstimate(data) {
   }
 
   const serviceKey = selectedServices[0];
+  if (serviceKey === "cleanup") {
+  const cleanupPricing = CLEANUP_PRICING[data.cleanupLevel];
+  const total = cleanupPricing?.[data.propertySize];
+
+  if (!total) {
+    return customQuoteEstimate();
+  }
+
+  return {
+    customQuoteRequired: false,
+
+    low: total,
+    high: total,
+    unit: "one-time",
+
+    weeklyTotal: null,
+    restorationTotal: null,
+    firstServiceTotal: null,
+
+    weeklyLineItems: [],
+    restorationLineItems: [],
+
+    summary: `${formatCurrency(total)} one-time`,
+
+    lineItems: [
+      {
+        label: "Full Property Cleanup",
+        amount: formatCurrency(total),
+      },
+    ],
+
+    disclaimer:
+      "This is an instant estimate. Final pricing is confirmed after Terra Verde reviews the property and submitted photos.",
+  };
+}
   const servicePricing = ONE_TIME_PRICING[serviceKey];
 
   if (!servicePricing) {
