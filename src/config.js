@@ -171,6 +171,52 @@ export const SCREENS = [
     },
   ],
 },
+          ],
+    rules: [
+      {
+        type: "required",
+        message: "Choose at least one service.",
+      },
+    ],
+  },
+
+  {
+    name: "cleanupLevel",
+    type: "choice",
+    variant: "compact",
+    label: "What level of cleanup is required?",
+    description:
+      "We'll review your photos and confirm the final cleanup level before providing your final quote.",
+    showWhen: {
+      oneTimeServices: "propertyCleanup",
+    },
+    options: [
+      {
+        value: "minor",
+        label: "Minor",
+        description:
+          "Light overgrowth, scattered leaves or debris, and only a small amount of cleanup required.",
+      },
+      {
+        value: "moderate",
+        label: "Moderate",
+        description:
+          "Noticeable overgrowth, weeds, or debris throughout the property.",
+      },
+      {
+        value: "extensive",
+        label: "Extensive",
+        description:
+          "Significant overgrowth, heavy debris, or areas that haven't been maintained for some time.",
+      },
+    ],
+    rules: [
+      {
+        type: "required",
+        message: "Choose a cleanup level.",
+      },
+    ],
+  },
     ],
   },
   {
