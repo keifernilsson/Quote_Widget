@@ -1,6 +1,6 @@
 import { SCREENS, COMPANY, SERVICE_OPTIONS } from "./config.js";
 import { createStateMachine } from "./state-machine.js";
-import { validateScreen } from "./validation.js";
+import { validateScreen, isFieldVisible } from "./validation.js";
 import { calculateEstimate } from "./quote-engine.js";
 import { clear, h } from "./dom.js";
 import {
