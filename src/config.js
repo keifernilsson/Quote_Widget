@@ -161,7 +161,7 @@ export const SCREENS = [
     featured: true,
     label: "Full Property Cleanup",
     description:
-      "Complete restoration of the property using whatever combination of cleanup services is needed.",
+      "Complete restoration of the property, including all Cleanup & Restoration services as needed.",
   },
   {
     value: "fertilization",
