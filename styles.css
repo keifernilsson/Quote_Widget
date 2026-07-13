@@ -664,3 +664,39 @@
     grid-template-columns: 1fr;
   }
 }
+/* ---------- Service Groups ---------- */
+
+.tvqa-service-group {
+  border: 1px solid var(--tvqa-border);
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  background: #fff;
+}
+
+.tvqa-service-group summary {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  font-weight: 700;
+  list-style: none;
+}
+
+.tvqa-service-group summary::-webkit-details-marker {
+  display: none;
+}
+
+.tvqa-service-group summary::before {
+  content: "▸";
+  transition: transform 0.2s ease;
+}
+
+.tvqa-service-group[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.tvqa-check-list {
+  padding: 0 1rem 1rem;
+}
