@@ -139,49 +139,71 @@ export const SCREENS = [
   type: "checkboxGroup",
   label: "Which services are you interested in? Select all that apply.",
   options: [
-    {
-  value: "debrisRemoval",
-  label: "Debris Removal",
-  description:
-    "Remove leaves, branches, yard waste, and other outdoor debris from the property.",
-},
-{
-  value: "bedWeeding",
-  label: "Garden Bed Weeding",
-  description:
-    "Remove weeds from existing garden and landscape beds to restore a tidy appearance.",
-},
-{
-  value: "overgrowthRemoval",
-  label: "Overgrowth Removal",
-  description:
-    "Cut back tall grass, weeds, and overgrown vegetation to restore neglected areas.",
-},
-{
-  value: "edgeRestoration",
-  label: "Edge Restoration",
-  description:
-    "Re-establish clean, defined edges around lawns, garden beds, and walkways.",
-},
-{
-  value: "cleanup",
-  label: "Full Property Cleanup",
-  description:
-    "Restore the entire property with a complete cleanup, including any combination of debris removal, overgrowth removal, bed weeding, and edge restoration as needed.",
-},
-{
-  value: "mulchInstallation",
-  label: "Mulch Installation",
-  description:
-    "Supply and install fresh mulch to improve the appearance and health of landscape beds.",
-},
-{
-  value: "fertilization",
-  label: "Fertilization",
-  description:
-    "Apply premium slow-release fertilizer to promote a greener, healthier lawn.",
-},
-  ],
+  {
+    value: "debrisRemoval",
+    group: "Cleanup & Restoration",
+    label: "Debris Removal",
+    description:
+      "Remove leaves, branches, yard waste, and other outdoor debris from the property.",
+  },
+  {
+    value: "bedWeeding",
+    group: "Cleanup & Restoration",
+    label: "Garden Bed Weeding",
+    description:
+      "Remove weeds from existing garden and landscape beds to restore a tidy appearance.",
+  },
+  {
+    value: "overgrowthRemoval",
+    group: "Cleanup & Restoration",
+    label: "Overgrowth Removal",
+    description:
+      "Cut back tall grass, weeds, and overgrown vegetation to restore neglected areas.",
+  },
+  {
+    value: "edgeRestoration",
+    group: "Cleanup & Restoration",
+    label: "Edge Restoration",
+    description:
+      "Re-establish clean, defined edges around lawns, garden beds, and walkways.",
+  },
+  {
+    value: "cleanup",
+    group: "Cleanup & Restoration",
+    featured: true,
+    label: "Full Property Cleanup",
+    description:
+      "Restore the entire property with debris removal, overgrowth removal, bed weeding, and edge restoration as needed.",
+  },
+  {
+    value: "fertilization",
+    group: "Lawn Services",
+    label: "Fertilization",
+    description:
+      "Apply premium slow-release fertilizer to promote a greener, healthier lawn.",
+  },
+  {
+    value: "overseeding",
+    group: "Lawn Services",
+    label: "Overseeding",
+    description:
+      "Apply grass seed to thin or bare areas to encourage thicker, more even turf.",
+  },
+  {
+    value: "topdressing",
+    group: "Lawn Services",
+    label: "Topdressing",
+    description:
+      "Apply a thin layer of soil to improve lawn smoothness, soil quality, and seed establishment.",
+  },
+  {
+    value: "mulchInstallation",
+    group: "Garden & Landscape",
+    label: "Mulch Installation",
+    description:
+      "Supply and install fresh mulch to improve the appearance and health of landscape beds.",
+  },
+],
   rules: [
     {
       type: "required",
