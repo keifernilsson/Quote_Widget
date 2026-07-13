@@ -171,14 +171,6 @@ export const SCREENS = [
     },
   ],
 },
-          ],
-    rules: [
-      {
-        type: "required",
-        message: "Choose at least one service.",
-      },
-    ],
-  },
 
   {
     name: "cleanupLevel",
