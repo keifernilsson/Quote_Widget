@@ -160,13 +160,22 @@ if (screen.type === "summary") {
     );
   }
 
-  updateField(name, value) {
-    if (this.errors[name]) {
-      this.errors = { ...this.errors, [name]: undefined };
-      delete this.errors[name];
-    }
-    this.machine.send({ type: "UPDATE_FIELD", name, value });
+updateField(name, value) {
+  if (this.errors[name]) {
+    this.errors = { ...this.errors, [name]: undefined };
+    delete this.errors[name];
   }
+
+  const active = document.activeElement;
+  const isTyping =
+    active &&
+    (active.tagName === "INPUT" || active.tagName === "TEXTAREA");
+
+  this.machine.send(
+    { type: "UPDATE_FIELD", name, value },
+    { silent: isTyping }
+  );
+}
 
   goBack() {
     this.errors = {};
