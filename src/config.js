@@ -117,15 +117,15 @@ export const SCREENS = [
     id: "one-time-details",
     type: "form",
      next: "address",
-    title: "Choose your services",
+    title: "Which services are you interested in?",
     eyebrow: "Step 2 of 6",
-    description: "Select the work you would like completed.",
+    description: "Select all that apply.",
     nextLabel: "Continue",
     fields: [
       {
   name: "oneTimeServices",
   type: "checkboxGroup",
-  label: "Which services are you interested in? Select all that apply.",
+  label: "",
   options: [
   {
     value: "debrisRemoval",
