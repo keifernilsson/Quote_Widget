@@ -700,3 +700,22 @@
 .tvqa-check-list {
   padding: 0 1rem 1rem;
 }
+/* ---------- Featured Service ---------- */
+
+.tvqa-check--featured {
+  border: 2px solid var(--tvqa-marigold);
+  background: #fffdf8;
+}
+
+.tvqa-check--featured .tvqa-check-label {
+  font-weight: 800;
+}
+
+.tvqa-check--featured .tvqa-choice-description {
+  color: #6b5d2e;
+}
+
+.tvqa-check--featured.is-selected {
+  border-color: var(--tvqa-marigold);
+  background: #fff8e8;
+}
