@@ -189,35 +189,6 @@ export const SCREENS = [
     },
   ],
 },
-{
-  name: "cleanupScope",
-  type: "choice",
-  variant: "compact",
-  label: "How much of the property needs cleanup?",
-  showWhen: {
-    oneTimeServices: "cleanup",
-  },
-  options: [
-    {
-      value: "partial",
-      label: "One specific area",
-      description:
-        "One section of the property, such as garden beds, a side yard, or another limited area.",
-    },
-    {
-      value: "full",
-      label: "Entire property",
-      description:
-        "The whole property needs cleanup before regular maintenance can begin.",
-    },
-  ],
-  rules: [
-    {
-      type: "required",
-      message: "Choose the cleanup scope.",
-    },
-  ],
-},
   {
     name: "cleanupLevel",
     type: "choice",
