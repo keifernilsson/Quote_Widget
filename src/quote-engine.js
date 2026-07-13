@@ -77,7 +77,7 @@ function calculateMowingEstimate(data) {
 
   const weeklyLineItems = [
     {
-      label: "Weekly Lawn Mowing",
+      label: "Weekly Lawn Maintenance",
       amount: MOWING_PRICE * multiplier,
     },
   ];
