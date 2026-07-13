@@ -141,13 +141,14 @@ export function CheckboxGroup({ field, value = [], error, onChange }) {
     const checked = selected.includes(option.value);
 
     return h(
-      "label",
-      {
-        class: [
-          "tvqa-check",
-          checked && "is-selected",
-          option.featured && "tvqa-check--featured",
-        ],
+  "label",
+  {
+    class: [
+      "tvqa-check",
+      checked && "is-selected",
+      option.featured && "tvqa-check--featured",
+      option.featured && "tvqa-check--featured-spacing",
+    ],
         dataset: {
           tvqaField: field.name,
           tvqaValue: option.value,
