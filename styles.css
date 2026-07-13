@@ -856,3 +856,60 @@
   border-color: var(--tvqa-marigold);
   background: #f8f5e9;
 }
+/* ---------- One-Time Service Section Polish ---------- */
+
+/* Style the service-selection title like the Property size title */
+.tvqa-field:has([data-tvqa-field="oneTimeServices"])
+  > .tvqa-field-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.tvqa-field:has([data-tvqa-field="oneTimeServices"])
+  > .tvqa-field-label::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #d8ded8;
+}
+
+/* Match accordion headings to the Property size cards */
+.tvqa-service-group-summary {
+  position: relative;
+  padding: 15px 16px 15px 40px;
+
+  border: 1px solid #cfd9cf;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: none;
+
+  color: #100c08;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.tvqa-service-group-summary::before {
+  position: absolute;
+  left: 16px;
+
+  color: var(--tvqa-marigold);
+  font-size: 0.75rem;
+}
+
+.tvqa-service-group-summary:hover {
+  border-color: var(--tvqa-marigold);
+  background: #fffdf8;
+}
+
+.tvqa-service-group[open] .tvqa-service-group-summary {
+  border-color: var(--tvqa-marigold);
+  background: #fffdf8;
+}
+
+/* Reduce the gap before Property size */
+.tvqa-field:has([data-tvqa-field="propertySize"]) {
+  margin-top: 18px;
+  padding-top: 18px;
+}
