@@ -205,7 +205,6 @@ export function CheckboxGroup({ field, value = [], error, onChange }) {
           "details",
           {
             class: "tvqa-service-group",
-            open: index === 0,
           },
 
          h(
