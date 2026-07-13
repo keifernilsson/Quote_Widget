@@ -34,6 +34,20 @@ const ONE_TIME_PRICING = {
     large: 99,
   },
 };
+const CLEANUP_PRICING = {
+  minor: {
+    standard: 175,
+    large: 250,
+  },
+  moderate: {
+    standard: 275,
+    large: 375,
+  },
+  extensive: {
+    standard: 425,
+    large: 575,
+  },
+};
 export function calculateEstimate(data) {
   if (data.service === "mowing") {
     return calculateMowingEstimate(data);
