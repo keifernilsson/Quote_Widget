@@ -139,9 +139,11 @@ function calculateMowingEstimate(data) {
     // update its layout in the next step.
     lineItems: [
       ...weeklyLineItems.map((item) => ({
-        label: item.label,
-        amount: formatCurrency(item.amount),
-      })),
+  label: item.label,
+  amount: `${formatCurrency(
+    Math.round((item.amount * 52) / 12)
+  )}/month`,
+})),
       ...restorationLineItems.map((item) => ({
         label: item.label,
         amount: `${formatCurrency(item.amount)} one-time`,
