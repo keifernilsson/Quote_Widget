@@ -100,6 +100,7 @@ function calculateMowingEstimate(data) {
   }
 
   const weeklyTotal = weeklySubtotal * multiplier;
+  const monthlyTotal = Math.round((weeklyTotal * 52) / 12);
 
   const conditionPrice =
     CONDITION_PRICES[data.lawnCondition] ?? 0;
@@ -121,9 +122,9 @@ function calculateMowingEstimate(data) {
   return {
     customQuoteRequired: false,
 
-    low: weeklyTotal,
-    high: weeklyTotal,
-    unit: "per week",
+    low: monthlyTotal,
+    high: monthlyTotal,
+    unit: "per month",
 
     weeklyTotal,
     restorationTotal,
@@ -132,7 +133,7 @@ function calculateMowingEstimate(data) {
     weeklyLineItems,
     restorationLineItems,
 
-    summary: `${formatCurrency(weeklyTotal)}/week`,
+    summary: `${formatCurrency(monthlyTotal)}/month`,
 
     // This keeps the current review page working until we
     // update its layout in the next step.
