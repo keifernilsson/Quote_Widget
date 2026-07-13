@@ -207,16 +207,11 @@ export function CheckboxGroup({ field, value = [], error, onChange }) {
             open: index === 0,
           },
 
-          h(
-            "summary",
-            { class: "tvqa-service-group-summary" },
-            h("span", {}, groupName),
-            h(
-              "span",
-              { class: "tvqa-service-group-count" },
-              String(options.length)
-            )
-          ),
+         h(
+  "summary",
+  { class: "tvqa-service-group-summary" },
+  h("span", {}, groupName)
+),
 
           h(
             "div",
