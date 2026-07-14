@@ -933,7 +933,21 @@
   border: 1px solid rgba(128, 0, 32, 0.2);
 }
 
+.tvqa-disposal-notice {
+  margin-top: 1rem;
+  padding: 0.875rem 1rem;
+  border-radius: 12px;
+  background: rgba(247, 243, 234, 0.7); /* Warm cream */
+  border: 1px solid rgba(138, 122, 47, 0.2); /* Soft olive-gold */
+}
+
 .tvqa-disposal-notice strong {
   display: block;
   margin-bottom: 0.35rem;
+  font-weight: 600;
+}
+
+.tvqa-disposal-notice p {
+  margin: 0;
+  color: var(--tvqa-text-secondary);
 }
