@@ -913,3 +913,15 @@
   margin-top: 18px;
   padding-top: 18px;
 }
+.tvqa-minimum-notice {
+  margin-top: 1rem;
+  padding: 0.875rem 1rem;
+  border-radius: 12px;
+  background: rgba(138, 122, 47, 0.12);
+  border: 1px solid rgba(138, 122, 47, 0.35);
+}
+
+.tvqa-minimum-notice strong {
+  display: block;
+  margin-bottom: 0.35rem;
+}
