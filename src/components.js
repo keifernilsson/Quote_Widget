@@ -432,19 +432,19 @@ if (isOneTime) {
           h(
             "p",
             { class: "tvqa-estimate-label" },
-            "Ongoing Weekly Service"
+            "Ongoing Monthy Price"
           ),
           h(
             "p",
             { class: "tvqa-estimate-value" },
-            `${formatCurrency(estimate.weeklyTotal)}/week`
+            `${formatCurrency(estimate.monthlyTotal)}/month`
           ),
         ]
       : [
           h(
             "p",
             { class: "tvqa-estimate-label" },
-            "Estimated Weekly Service"
+            "Estimated Monthly Price"
           ),
           h(
             "p",
