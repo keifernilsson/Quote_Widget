@@ -117,7 +117,7 @@ function calculateMowingEstimate(data) {
         ]
       : [];
 
-  const firstServiceTotal = weeklyTotal + restorationTotal;
+  const firstMonthTotal = monthlyTotal + restorationTotal;
   
   return {
     customQuoteRequired: false,
