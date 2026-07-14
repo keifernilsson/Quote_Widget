@@ -125,6 +125,7 @@ export const SCREENS = [
       {
   name: "oneTimeServices",
   type: "checkboxGroup",
+  accordion: true,
   label: "",
   options: [
   {
