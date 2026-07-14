@@ -409,6 +409,19 @@ if (isOneTime) {
     )
   : null,
 
+    estimate.disposalMayApply
+  ? h(
+      "div",
+      { class: "tvqa-disposal-notice" },
+      h("strong", {}, "Disposal fees may apply"),
+      h(
+        "p",
+        {},
+        "Haul-away or disposal charges may be added if material needs to be removed from the property. Final pricing will be confirmed after photo review."
+      )
+    )
+  : null,
+
     h("p", { class: "tvqa-disclaimer" }, estimate.disclaimer)
   );
 }
