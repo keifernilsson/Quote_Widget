@@ -1,6 +1,8 @@
 import { h, visuallyHidden } from "./dom.js";
 import { formatCurrency } from "./quote-engine.js";
 
+const openServiceGroups = new Set();
+
 export function Shell({ company, progress, children }) {
   return h(
     "section",
@@ -125,43 +127,116 @@ export function ChoiceGroup({ field, value, error, onChange }) {
 
 export function CheckboxGroup({ field, value = [], error, onChange }) {
   const selected = Array.isArray(value) ? value : [];
+  const useAccordion = field.accordion === true;
+
+  const groups = field.options.reduce((result, option) => {
+    const groupName = option.group || "Services";
+
+    if (!result[groupName]) {
+      result[groupName] = [];
+    }
+
+    result[groupName].push(option);
+    return result;
+  }, {});
+
+  function renderOption(option) {
+    const checked = selected.includes(option.value);
+
+    return h(
+  "label",
+  {
+    class: [
+      "tvqa-check",
+      checked && "is-selected",
+      option.featured && "tvqa-check--featured",
+      option.featured && "tvqa-check--featured-spacing",
+    ],
+        dataset: {
+          tvqaField: field.name,
+          tvqaValue: option.value,
+        },
+      },
+      h("input", {
+        type: "checkbox",
+        checked,
+        onChange: () => {
+          const next = checked
+            ? selected.filter((item) => item !== option.value)
+            : [...selected, option.value];
+
+          onChange(field.name, next);
+        },
+      }),
+      h("span", {
+        class: "tvqa-check-box",
+        "aria-hidden": "true",
+      }),
+      h(
+        "span",
+        {},
+        h(
+          "span",
+          { class: "tvqa-check-label" },
+          option.label
+        ),
+        option.description
+          ? h(
+              "span",
+              { class: "tvqa-choice-description" },
+              option.description
+            )
+          : null
+      )
+    );
+  }
 
   return h(
     "fieldset",
-    { class: fieldClass(field, error), "aria-describedby": errorId(field) },
+    {
+      class: fieldClass(field, error),
+      "aria-describedby": errorId(field),
+    },
     h("legend", { class: "tvqa-field-label" }, field.label),
-    h(
+
+   useAccordion
+  ? h(
+      "div",
+      { class: "tvqa-service-groups" },
+
+      Object.entries(groups).map(([groupName, options]) =>
+        h(
+          "details",
+          {
+            class: "tvqa-service-group",
+            open: openServiceGroups.has(groupName),
+            onToggle: (event) => {
+              if (event.currentTarget.open) {
+                openServiceGroups.add(groupName);
+              } else {
+                openServiceGroups.delete(groupName);
+              }
+            },
+          },
+
+          h(
+            "summary",
+            { class: "tvqa-service-group-summary" },
+            h("span", {}, groupName)
+          ),
+
+          h(
+            "div",
+            { class: "tvqa-check-list" },
+            options.map(renderOption)
+          )
+        )
+      )
+    )
+  : h(
       "div",
       { class: "tvqa-check-list" },
-      field.options.map((option) => {
-        const checked = selected.includes(option.value);
-        return h(
-          "label",
-          {
-            class: ["tvqa-check", checked && "is-selected"],
-            dataset: { tvqaField: field.name, tvqaValue: option.value },
-          },
-          h("input", {
-            type: "checkbox",
-            checked,
-            onChange: () => {
-              const next = checked
-                ? selected.filter((item) => item !== option.value)
-                : [...selected, option.value];
-              onChange(field.name, next);
-            },
-          }),
-          h("span", { class: "tvqa-check-box", "aria-hidden": "true" }),
-h(
-  "span",
-  {},
-  h("span", { class: "tvqa-check-label" }, option.label),
-  option.description
-    ? h("span", { class: "tvqa-choice-description" }, option.description)
-    : null
-)
-        );
-      })
+      field.options.map(renderOption)
     ),
     FieldError({ field, error })
   );
@@ -319,6 +394,21 @@ if (isOneTime) {
       )
     ),
 
+    estimate.minimumChargeApplies
+  ? h(
+      "div",
+      { class: "tvqa-minimum-notice" },
+      h("strong", {}, "Minimum service charge applies"),
+      h(
+        "p",
+        {},
+        `${formatCurrency(
+          estimate.minimumServiceCharge
+        )} minimum for one-time visits. You can add another service to make better use of the visit.`
+      )
+    )
+  : null,
+
     h("p", { class: "tvqa-disclaimer" }, estimate.disclaimer)
   );
 }
@@ -328,17 +418,17 @@ if (isOneTime) {
 
     ...(hasRestoration
       ? [
-          h("p", { class: "tvqa-estimate-label" }, "First Service Total"),
+          h("p", { class: "tvqa-estimate-label" }, "First Month Total"),
           h(
             "p",
             { class: "tvqa-estimate-value" },
-            formatCurrency(estimate.firstServiceTotal)
+            formatCurrency(estimate.firstMonthTotal)
           ),
 
           h(
             "p",
             { class: "tvqa-estimate-label" },
-            "Your first visit includes:"
+            "Your first month includes:"
           ),
 
           h(
@@ -353,8 +443,8 @@ if (isOneTime) {
                   "strong",
                   {},
                   item.label === "Initial Lawn Restoration"
-                    ? `${formatCurrency(item.amount)} one-time`
-                    : formatCurrency(item.amount)
+                  ? `${formatCurrency(item.amount)} one-time`
+                  : `${formatCurrency(Math.round((item.amount * 52) / 12))}/month`
                 )
               )
             )
@@ -363,24 +453,24 @@ if (isOneTime) {
           h(
             "p",
             { class: "tvqa-estimate-label" },
-            "Ongoing Weekly Service"
+            "Ongoing Monthy Price"
           ),
           h(
             "p",
             { class: "tvqa-estimate-value" },
-            `${formatCurrency(estimate.weeklyTotal)}/week`
+            `${formatCurrency(estimate.monthlyTotal)}/month`
           ),
         ]
       : [
           h(
             "p",
             { class: "tvqa-estimate-label" },
-            "Estimated Weekly Service"
+            "Estimated Monthly Price"
           ),
           h(
             "p",
             { class: "tvqa-estimate-value" },
-            `${formatCurrency(estimate.weeklyTotal)}/week`
+            `${formatCurrency(estimate.monthlyTotal)}/month`
           ),
 
           h("p", { class: "tvqa-estimate-label" }, "Includes:"),
@@ -393,7 +483,11 @@ if (isOneTime) {
                 "div",
                 { class: "tvqa-line-item" },
                 h("span", {}, item.label),
-                h("strong", {}, formatCurrency(item.amount))
+                h(
+               "strong",
+               {},
+               `${formatCurrency(Math.round((item.amount * 52) / 12))}/month`
+                )
               )
             )
           ),

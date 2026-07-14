@@ -4,6 +4,8 @@ const currency = new Intl.NumberFormat("en-CA", {
   maximumFractionDigits: 0,
 });
 
+const MINIMUM_SERVICE_CHARGE = 80;
+
 const MOWING_PRICE = 50;
 
 const PROPERTY_MULTIPLIERS = {
@@ -32,6 +34,20 @@ const ONE_TIME_PRICING = {
     label: "Fertilization",
     standard: 75,
     large: 99,
+  },
+};
+const CLEANUP_PRICING = {
+  minor: {
+    standard: 175,
+    large: 250,
+  },
+  moderate: {
+    standard: 275,
+    large: 375,
+  },
+  extensive: {
+    standard: 425,
+    large: 575,
   },
 };
 export function calculateEstimate(data) {
@@ -63,7 +79,7 @@ function calculateMowingEstimate(data) {
 
   const weeklyLineItems = [
     {
-      label: "Weekly Lawn Mowing",
+      label: "Weekly Lawn Maintenance",
       amount: MOWING_PRICE * multiplier,
     },
   ];
@@ -86,6 +102,7 @@ function calculateMowingEstimate(data) {
   }
 
   const weeklyTotal = weeklySubtotal * multiplier;
+  const monthlyTotal = Math.round((weeklyTotal * 52) / 12);
 
   const conditionPrice =
     CONDITION_PRICES[data.lawnCondition] ?? 0;
@@ -102,31 +119,34 @@ function calculateMowingEstimate(data) {
         ]
       : [];
 
-  const firstServiceTotal = weeklyTotal + restorationTotal;
+  const firstMonthTotal = monthlyTotal + restorationTotal;
   
   return {
     customQuoteRequired: false,
 
-    low: weeklyTotal,
-    high: weeklyTotal,
-    unit: "per week",
+    low: monthlyTotal,
+    high: monthlyTotal,
+    unit: "per month",
 
     weeklyTotal,
+    monthlyTotal,
     restorationTotal,
     firstServiceTotal,
 
     weeklyLineItems,
     restorationLineItems,
 
-    summary: `${formatCurrency(weeklyTotal)}/week`,
+    summary: `${formatCurrency(monthlyTotal)}/month`,
 
     // This keeps the current review page working until we
     // update its layout in the next step.
     lineItems: [
       ...weeklyLineItems.map((item) => ({
-        label: item.label,
-        amount: formatCurrency(item.amount),
-      })),
+  label: item.label,
+  amount: `${formatCurrency(
+    Math.round((item.amount * 52) / 12)
+  )}/month`,
+})),
       ...restorationLineItems.map((item) => ({
         label: item.label,
         amount: `${formatCurrency(item.amount)} one-time`,
@@ -151,6 +171,45 @@ function calculateOneTimeEstimate(data) {
   }
 
   const serviceKey = selectedServices[0];
+  if (serviceKey === "cleanup") {
+  const cleanupPricing = CLEANUP_PRICING[data.cleanupLevel];
+  const total = cleanupPricing?.[data.propertySize];
+  const minimumChargeApplies =
+  total < MINIMUM_SERVICE_CHARGE;
+
+  if (!total) {
+    return customQuoteEstimate();
+  }
+
+  return {
+    customQuoteRequired: false,
+
+    low: total,
+    high: total,
+    unit: "one-time",
+    minimumChargeApplies,
+minimumServiceCharge: MINIMUM_SERVICE_CHARGE,
+
+    weeklyTotal: null,
+    restorationTotal: null,
+    firstMonthTotal: null,
+
+    weeklyLineItems: [],
+    restorationLineItems: [],
+
+    summary: `${formatCurrency(total)} one-time`,
+
+    lineItems: [
+      {
+        label: "Full Property Cleanup",
+        amount: formatCurrency(total),
+      },
+    ],
+
+    disclaimer:
+      "This is an instant estimate. Final pricing is confirmed after Terra Verde reviews the property and submitted photos.",
+  };
+}
   const servicePricing = ONE_TIME_PRICING[serviceKey];
 
   if (!servicePricing) {

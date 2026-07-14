@@ -1,6 +1,6 @@
 import { SCREENS, COMPANY, SERVICE_OPTIONS } from "./config.js";
 import { createStateMachine } from "./state-machine.js";
-import { validateScreen } from "./validation.js";
+import { validateScreen, isFieldVisible } from "./validation.js";
 import { calculateEstimate } from "./quote-engine.js";
 import { clear, h } from "./dom.js";
 import {
@@ -81,7 +81,15 @@ const progressIndex = (PROGRESS_STEPS[screen.id] ?? 1) - 1;
             nextLabel: screen.nextLabel,
             isSuccess: screen.id === "success",
             onBack: () => this.goBack(),
-            onNext: () => this.goNext(screen, state, estimate),
+            onNext: () => {
+  const latestState = this.machine.getState();
+  const latestEstimate = calculateEstimate(
+    latestState.data,
+    this.options.quoteRules
+  );
+
+  this.goNext(screen, latestState, latestEstimate);
+},
           }),
         ],
       })
@@ -145,26 +153,37 @@ if (screen.type === "summary") {
       h(
         "div",
         { class: "tvqa-fields" },
-        (screen.fields || []).map((field) =>
-          FieldRenderer({
-            field,
-            value: state.data[field.name],
-            data: state.data,
-            error: this.errors[field.name],
-            onChange: (name, value) => this.updateField(name, value),
-          })
-        )
+       (screen.fields || [])
+  .filter((field) => isFieldVisible(field, state.data))
+  .map((field) =>
+    FieldRenderer({
+      field,
+      value: state.data[field.name],
+      data: state.data,
+      error: this.errors[field.name],
+      onChange: (name, value) => this.updateField(name, value),
+    })
+  )
       )
     );
   }
 
-  updateField(name, value) {
-    if (this.errors[name]) {
-      this.errors = { ...this.errors, [name]: undefined };
-      delete this.errors[name];
-    }
-    this.machine.send({ type: "UPDATE_FIELD", name, value });
+updateField(name, value) {
+  if (this.errors[name]) {
+    this.errors = { ...this.errors, [name]: undefined };
+    delete this.errors[name];
   }
+
+  const active = document.activeElement;
+  const isTyping =
+    active &&
+    (active.tagName === "INPUT" || active.tagName === "TEXTAREA");
+
+  this.machine.send(
+    { type: "UPDATE_FIELD", name, value },
+    { silent: isTyping }
+  );
+}
 
   goBack() {
     this.errors = {};

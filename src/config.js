@@ -2,7 +2,7 @@ export const COMPANY = {
   name: "Terra Verde Lawn Company",
   phone: "(403) 635-7460",
   email: "terraverdelethbridge@gmail.com",
-  serviceArea: "Lethbridge",
+  serviceArea: "Lethbridge, AB",
 };
 
 export const SERVICE_OPTIONS = [
@@ -117,53 +117,82 @@ export const SCREENS = [
     id: "one-time-details",
     type: "form",
      next: "address",
-    title: "Tell us about the property",
+    title: "Which services are you interested in?",
     eyebrow: "Step 2 of 6",
-    description: "These details help us estimate the scope before an on-site visit.",
+    description: "Select all that apply.",
     nextLabel: "Continue",
     fields: [
       {
-        name: "propertySize",
-        type: "choice",
-        variant: "compact",
-        label: "Property size",
-        options: [
-          { value: "standard", label: "Standard", description: "Typical suburban property", info: "Lots up to 7,000 sq ft." },
-          { value: "large", label: "Large", description: "Large lot or corner property",  info: "Lots from 7,001 - 10,890 sq ft (1/4 acre)" },
-          { value: "custom", label: "Custom", description: "Extra large or unique property", info: "Lots over 10,890 sq ft (1/4 acre) require a custom quote" },
-        ],
-        rules: [{ type: "required", message: "Choose a property size." }],
-      },
-      {
   name: "oneTimeServices",
   type: "checkboxGroup",
-  label: "Which services are you interested in? Select all that apply.",
+  accordion: true,
+  label: "",
   options: [
-    {
-      value: "propertyCleanup",
-      label: "Property Cleanup",
-      description:
-        "Remove debris, cut back overgrowth, and restore a tidy appearance.",
-    },
-    {
-      value: "gardenBedWeeding",
-      label: "Garden Bed Weeding",
-      description:
-        "Remove weeds from existing garden and landscape beds by hand.",
-    },
-    {
-      value: "mulchInstallation",
-      label: "Mulch Installation",
-      description:
-        "Install fresh mulch in existing garden and landscape beds.",
-    },
-    {
-      value: "fertilization",
-      label: "Fertilization",
-      description:
-        "Apply lawn fertilizer to encourage greener, thicker turf.",
-    },
-  ],
+  {
+    value: "debrisRemoval",
+    group: "Cleanup & Restoration",
+    label: "Debris Removal",
+    description:
+      "Remove leaves, branches, and yard waste.",
+  },
+  {
+    value: "bedWeeding",
+    group: "Cleanup & Restoration",
+    label: "Garden Bed Weeding",
+    description:
+      "Remove weeds from existing landscape beds.",
+  },
+  {
+    value: "overgrowthRemoval",
+    group: "Cleanup & Restoration",
+    label: "Overgrowth Removal",
+    description:
+      "Cut back tall grass and overgrown vegetation.",
+  },
+  {
+    value: "edgeRestoration",
+    group: "Cleanup & Restoration",
+    label: "Edge Restoration",
+    description:
+      "Re-establish clean lawn and garden edges.",
+  },
+  {
+    value: "cleanup",
+    group: "Cleanup & Restoration",
+    featured: true,
+    label: "Full Property Cleanup",
+    description:
+      "Complete restoration of the property, including all Cleanup & Restoration services as needed.",
+  },
+  {
+    value: "fertilization",
+    group: "Lawn Services",
+    label: "Fertilization",
+    description:
+      "Promote a greener, healthier lawn.",
+  },
+  {
+    value: "overseeding",
+    group: "Lawn Services",
+    label: "Overseeding",
+    description:
+      "Thicken thin or patchy turf.",
+  },
+  {
+    value: "topdressing",
+    group: "Lawn Services",
+    label: "Topdressing",
+    description:
+      "Improve soil quality and lawn smoothness.",
+  },
+  {
+    value: "mulchInstallation",
+    group: "Garden & Landscape",
+    label: "Mulch Installation",
+    description:
+      "Refresh landscape beds with new mulch.",
+  },
+],
   rules: [
     {
       type: "required",
@@ -171,6 +200,63 @@ export const SCREENS = [
     },
   ],
 },
+  {
+    name: "cleanupLevel",
+    type: "choice",
+    variant: "compact",
+    label: "What is the scale of cleanup required?",
+    description:
+      "We'll review your photos and confirm before providing your final quote.",
+    showWhen: {
+  oneTimeServices: [
+    "debrisRemoval",
+    "bedWeeding",
+    "overgrowthRemoval",
+    "edgeRestoration",
+    "cleanup",
+  ],
+},
+    options: [
+      {
+        value: "minor",
+        label: "Minor",
+        description:
+          "The property is generally maintained and only needs a light cleanup.",
+      },
+      {
+        value: "moderate",
+        label: "Moderate",
+        description:
+  "The property has fallen behind and requires a thorough cleanup.",
+      },
+      {
+        value: "extensive",
+        label: "Extensive",
+        description:
+          "Significant overgrowth, heavy debris, or areas that haven't been maintained for some time.",
+      },
+    ],
+    rules: [
+      {
+        type: "required",
+        message: "Choose a cleanup level.",
+      },
+    ],
+  },
+       {
+        name: "propertySize",
+        type: "choice",
+        variant: "compact",
+        label: "Property size",
+        description:
+  "Choose the approximate size of your property so we can generate a more accurate estimate.",
+        options: [
+          { value: "standard", label: "Standard", description: "Typical suburban property", info: "Lots up to 7,000 sq ft." },
+          { value: "large", label: "Large", description: "Large lot or corner property",  info: "Lots from 7,001 - 10,890 sq ft (1/4 acre)" },
+          { value: "custom", label: "Custom", description: "Extra large or unique property", info: "Lots over 10,890 sq ft (1/4 acre) require a custom quote" },
+        ],
+        rules: [{ type: "required", message: "Choose a property size." }],
+      },
     ],
   },
   {

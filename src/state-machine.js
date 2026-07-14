@@ -50,14 +50,20 @@ if (currentScreen.next) {
 }
 
       case "BACK": {
-        const previousIndex = Math.max(currentState.index - 1, 0);
-        return freezeState({
-          ...currentState,
-          current: ids[previousIndex],
-          index: previousIndex,
-          history: currentState.history.slice(0, -1),
-        });
-      }
+  const previousId =
+    currentState.history[currentState.history.length - 1];
+
+  const previousIndex = previousId
+    ? ids.indexOf(previousId)
+    : Math.max(currentState.index - 1, 0);
+
+  return freezeState({
+    ...currentState,
+    current: ids[previousIndex],
+    index: previousIndex,
+    history: currentState.history.slice(0, -1),
+  });
+}
 
       case "SUBMIT": {
         const successIndex = ids.indexOf("success");
@@ -91,13 +97,17 @@ if (currentScreen.next) {
     getCurrentScreen() {
       return screens[state.index];
     },
-    send(action) {
-      const nextState = transition(state, action);
-      if (nextState !== state) {
-        state = nextState;
-        emit();
-      }
-    },
+    send(action, options = {}) {
+  const nextState = transition(state, action);
+
+  if (nextState !== state) {
+    state = nextState;
+
+    if (!options.silent) {
+      emit();
+    }
+  }
+},
     subscribe(listener) {
       listeners.add(listener);
       listener(state);

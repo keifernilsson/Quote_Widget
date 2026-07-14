@@ -664,3 +664,264 @@
     grid-template-columns: 1fr;
   }
 }
+/* ---------- Service Groups ---------- */
+
+.tvqa-service-group {
+  border: 1px solid var(--tvqa-border);
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  background: #fff;
+}
+
+.tvqa-service-group summary {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  font-weight: 700;
+  list-style: none;
+}
+
+.tvqa-service-group summary::-webkit-details-marker {
+  display: none;
+}
+
+.tvqa-service-group summary::before {
+  content: "▸";
+  transition: transform 0.2s ease;
+}
+
+.tvqa-service-group[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.tvqa-check-list {
+  padding: 0 1rem 1rem;
+}
+/* ---------- Featured Service ---------- */
+
+.tvqa-check--featured {
+  border: 2px solid var(--tvqa-marigold);
+  background: linear-gradient(to bottom, #fffdf9, #fff9ef);
+  margin-top: 10px;
+}
+
+.tvqa-check--featured .tvqa-check-label {
+  font-weight: 800;
+  font-size: 1.05rem;
+}
+
+.tvqa-check--featured .tvqa-choice-description {
+  color: #5f5426;
+}
+
+.tvqa-check--featured.is-selected {
+  border-color: var(--tvqa-marigold);
+  background: linear-gradient(to bottom, #fff7e8, #fff2d8);
+}
+/* ---------- Service Group Headings ---------- */
+
+.tvqa-service-group {
+  margin-bottom: 12px;
+}
+
+.tvqa-service-group-summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 14px 16px;
+  border: 1px solid #cfd9cf;
+  border-radius: 10px;
+  background: #f8faf7;
+
+  cursor: pointer;
+  font-weight: 800;
+  list-style: none;
+}
+
+.tvqa-service-group-summary::-webkit-details-marker {
+  display: none;
+}
+
+.tvqa-service-group-summary::before {
+  content: "▸";
+  font-size: 12px;
+  transition: transform 0.2s ease;
+}
+
+.tvqa-service-group[open] .tvqa-service-group-summary::before {
+  transform: rotate(90deg);
+}
+
+.tvqa-service-group[open] .tvqa-service-group-summary {
+  margin-bottom: 10px;
+  background: #f3f7f1;
+}
+/* ---------- Compact Service Cards ---------- */
+
+.tvqa-service-group .tvqa-check {
+  padding: 12px;
+  min-height: auto;
+}
+
+.tvqa-service-group .tvqa-check-list {
+  gap: 8px;
+}
+
+.tvqa-service-group .tvqa-choice-description {
+  margin-top: 3px;
+  line-height: 1.35;
+}
+
+.tvqa-check--featured-spacing {
+  position: relative;
+  margin-top: 42px;
+}
+
+.tvqa-check--featured-spacing::before {
+  content: "OR";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #6f756f;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+.tvqa-check--featured-spacing::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -20px;
+
+  height: 1px;
+  background: #d8ded8;
+  z-index: 0;
+}
+
+.tvqa-check--featured-spacing::before {
+  width: 46px;
+  margin: 0 auto;
+  background: white;
+  z-index: 1;
+}
+/* ---------- Property Details Separation ---------- */
+
+.tvqa-field:has([data-tvqa-field="propertySize"]) {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #d8ded8;
+}
+/* ---------- Service Section Titles ---------- */
+
+.tvqa-service-group-summary {
+  position: relative;
+  padding: 16px 18px 16px 44px;
+
+  border: 1px solid #d6ddd4;
+  border-radius: 12px;
+
+  background: linear-gradient(to bottom, #fbfcfa, #f4f7f2);
+  box-shadow: 0 2px 8px rgba(16, 12, 8, 0.04);
+
+  color: #100c08;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.tvqa-service-group-summary::before {
+  position: absolute;
+  left: 18px;
+
+  color: var(--tvqa-marigold);
+  font-size: 0.8rem;
+}
+
+.tvqa-service-group-summary:hover {
+  border-color: var(--tvqa-marigold);
+  background: #faf8f1;
+}
+
+.tvqa-service-group[open] .tvqa-service-group-summary {
+  border-color: var(--tvqa-marigold);
+  background: #f8f5e9;
+}
+/* ---------- One-Time Service Section Polish ---------- */
+
+/* Style the service-selection title like the Property size title */
+.tvqa-field:has([data-tvqa-field="oneTimeServices"])
+  > .tvqa-field-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.tvqa-field:has([data-tvqa-field="oneTimeServices"])
+  > .tvqa-field-label::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #d8ded8;
+}
+
+/* Match accordion headings to the Property size cards */
+.tvqa-service-group-summary {
+  position: relative;
+  padding: 15px 16px 15px 40px;
+
+  border: 1px solid #cfd9cf;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: none;
+
+  color: #100c08;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.tvqa-service-group-summary::before {
+  position: absolute;
+  left: 16px;
+
+  color: var(--tvqa-marigold);
+  font-size: 0.75rem;
+}
+
+.tvqa-service-group-summary:hover {
+  border-color: var(--tvqa-marigold);
+  background: #fffdf8;
+}
+
+.tvqa-service-group[open] .tvqa-service-group-summary {
+  border-color: var(--tvqa-marigold);
+  background: #fffdf8;
+}
+
+/* Reduce the gap before Property size */
+.tvqa-field:has([data-tvqa-field="propertySize"]) {
+  margin-top: 18px;
+  padding-top: 18px;
+}
+.tvqa-minimum-notice {
+  margin-top: 1rem;
+  padding: 0.875rem 1rem;
+  border-radius: 12px;
+  background: rgba(138, 122, 47, 0.12);
+  border: 1px solid rgba(138, 122, 47, 0.35);
+}
+
+.tvqa-minimum-notice strong {
+  display: block;
+  margin-bottom: 0.35rem;
+}
