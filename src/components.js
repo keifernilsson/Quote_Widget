@@ -394,6 +394,21 @@ if (isOneTime) {
       )
     ),
 
+    estimate.minimumChargeApplies
+  ? h(
+      "div",
+      { class: "tvqa-minimum-notice" },
+      h("strong", {}, "Minimum service charge applies"),
+      h(
+        "p",
+        {},
+        `${formatCurrency(
+          estimate.minimumServiceCharge
+        )} minimum for one-time visits. You can add another service to make better use of the visit.`
+      )
+    )
+  : null,
+
     h("p", { class: "tvqa-disclaimer" }, estimate.disclaimer)
   );
 }
