@@ -413,11 +413,11 @@ if (isOneTime) {
   ? h(
       "div",
       { class: "tvqa-disposal-notice" },
-      h("strong", {}, "Disposal fees may apply"),
+      h("strong", {}, "Please note"),
       h(
         "p",
         {},
-        "Haul-away or disposal charges may be added if material needs to be removed from the property. Final pricing will be confirmed after photo review."
+        "Some services may require material to be removed from the property. If disposal is required, any applicable fees will be confirmed after we review your photos."
       )
     )
   : null,
