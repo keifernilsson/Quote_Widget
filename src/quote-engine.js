@@ -4,6 +4,8 @@ const currency = new Intl.NumberFormat("en-CA", {
   maximumFractionDigits: 0,
 });
 
+const MINIMUM_SERVICE_CHARGE = 80;
+
 const MOWING_PRICE = 50;
 
 const PROPERTY_MULTIPLIERS = {
@@ -172,6 +174,8 @@ function calculateOneTimeEstimate(data) {
   if (serviceKey === "cleanup") {
   const cleanupPricing = CLEANUP_PRICING[data.cleanupLevel];
   const total = cleanupPricing?.[data.propertySize];
+  const minimumChargeApplies =
+  total < MINIMUM_SERVICE_CHARGE;
 
   if (!total) {
     return customQuoteEstimate();
@@ -183,10 +187,12 @@ function calculateOneTimeEstimate(data) {
     low: total,
     high: total,
     unit: "one-time",
+    minimumChargeApplies,
+minimumServiceCharge: MINIMUM_SERVICE_CHARGE,
 
     weeklyTotal: null,
     restorationTotal: null,
-    firstServiceTotal: null,
+    firstMonthTotal: null,
 
     weeklyLineItems: [],
     restorationLineItems: [],
