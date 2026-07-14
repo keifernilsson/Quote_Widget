@@ -199,30 +199,31 @@ export function CheckboxGroup({ field, value = [], error, onChange }) {
     },
     h("legend", { class: "tvqa-field-label" }, field.label),
 
-    h(
+   useAccordion
+  ? h(
       "div",
       { class: "tvqa-service-groups" },
 
-      Object.entries(groups).map(([groupName, options], index) =>
+      Object.entries(groups).map(([groupName, options]) =>
         h(
           "details",
           {
-  class: "tvqa-service-group",
-  open: openServiceGroups.has(groupName),
-  onToggle: (event) => {
-    if (event.currentTarget.open) {
-      openServiceGroups.add(groupName);
-    } else {
-      openServiceGroups.delete(groupName);
-    }
-  },
-},
+            class: "tvqa-service-group",
+            open: openServiceGroups.has(groupName),
+            onToggle: (event) => {
+              if (event.currentTarget.open) {
+                openServiceGroups.add(groupName);
+              } else {
+                openServiceGroups.delete(groupName);
+              }
+            },
+          },
 
-         h(
-  "summary",
-  { class: "tvqa-service-group-summary" },
-  h("span", {}, groupName)
-),
+          h(
+            "summary",
+            { class: "tvqa-service-group-summary" },
+            h("span", {}, groupName)
+          ),
 
           h(
             "div",
@@ -231,8 +232,12 @@ export function CheckboxGroup({ field, value = [], error, onChange }) {
           )
         )
       )
+    )
+  : h(
+      "div",
+      { class: "tvqa-check-list" },
+      field.options.map(renderOption)
     ),
-
     FieldError({ field, error })
   );
 }
