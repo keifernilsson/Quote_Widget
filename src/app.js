@@ -81,7 +81,15 @@ const progressIndex = (PROGRESS_STEPS[screen.id] ?? 1) - 1;
             nextLabel: screen.nextLabel,
             isSuccess: screen.id === "success",
             onBack: () => this.goBack(),
-            onNext: () => this.goNext(screen, state, estimate),
+            onNext: () => {
+  const latestState = this.machine.getState();
+  const latestEstimate = calculateEstimate(
+    latestState.data,
+    this.options.quoteRules
+  );
+
+  this.goNext(screen, latestState, latestEstimate);
+},
           }),
         ],
       })
