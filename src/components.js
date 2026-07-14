@@ -407,7 +407,7 @@ if (isOneTime) {
           h(
             "p",
             { class: "tvqa-estimate-label" },
-            "Your first visit includes:"
+            "Your first month includes:"
           ),
 
           h(
