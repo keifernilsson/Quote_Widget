@@ -91,13 +91,17 @@ if (currentScreen.next) {
     getCurrentScreen() {
       return screens[state.index];
     },
-    send(action) {
-      const nextState = transition(state, action);
-      if (nextState !== state) {
-        state = nextState;
-        emit();
-      }
-    },
+    send(action, options = {}) {
+  const nextState = transition(state, action);
+
+  if (nextState !== state) {
+    state = nextState;
+
+    if (!options.silent) {
+      emit();
+    }
+  }
+},
     subscribe(listener) {
       listeners.add(listener);
       listener(state);
