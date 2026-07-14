@@ -397,11 +397,11 @@ if (isOneTime) {
 
     ...(hasRestoration
       ? [
-          h("p", { class: "tvqa-estimate-label" }, "First Service Total"),
+          h("p", { class: "tvqa-estimate-label" }, "First Month Total"),
           h(
             "p",
             { class: "tvqa-estimate-value" },
-            formatCurrency(estimate.firstServiceTotal)
+            formatCurrency(estimate.firstMonthTotal)
           ),
 
           h(
