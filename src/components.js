@@ -422,8 +422,8 @@ if (isOneTime) {
                   "strong",
                   {},
                   item.label === "Initial Lawn Restoration"
-                    ? `${formatCurrency(item.amount)} one-time`
-                    : formatCurrency(item.amount)
+                  ? `${formatCurrency(item.amount)} one-time`
+                  : `${formatCurrency(Math.round((item.amount * 52) / 12))}/month`
                 )
               )
             )
@@ -449,7 +449,7 @@ if (isOneTime) {
           h(
             "p",
             { class: "tvqa-estimate-value" },
-            `${formatCurrency(estimate.weeklyTotal)}/week`
+            `${formatCurrency(estimate.monthlyTotal)}/month`
           ),
 
           h("p", { class: "tvqa-estimate-label" }, "Includes:"),
@@ -462,7 +462,11 @@ if (isOneTime) {
                 "div",
                 { class: "tvqa-line-item" },
                 h("span", {}, item.label),
-                h("strong", {}, formatCurrency(item.amount))
+                h(
+               "strong",
+               {},
+               `${formatCurrency(Math.round((item.amount * 52) / 12))}/month`
+                )
               )
             )
           ),
