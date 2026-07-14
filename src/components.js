@@ -127,6 +127,7 @@ export function ChoiceGroup({ field, value, error, onChange }) {
 
 export function CheckboxGroup({ field, value = [], error, onChange }) {
   const selected = Array.isArray(value) ? value : [];
+  const useAccordion = field.accordion === true;
 
   const groups = field.options.reduce((result, option) => {
     const groupName = option.group || "Services";
